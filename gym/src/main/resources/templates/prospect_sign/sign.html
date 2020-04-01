@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <title>潜客登记</title>
+    <style>
+        body{
+            min-height: 400px;
+        }
+        h1{
+            line-height: 60px;
+        }
+        .container{
+            margin-top: 50px;
+        }
+        .btn {
+            width:100px;
+            margin:0 0 0 65px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1><a href="#">天智健身系统</a></h1>
+    <div class="user">
+        <a href="/user/edit.html">个人中心</a>
+        <a>退出</a>
+    </div>
+</div>
+<form class="container" method="post" action="/prospect_sign/insert">
+    <ol class="breadcrumb">
+        <span class="active">潜客登记</span>
+    </ol>
+    <div class="input-group">
+        <span class="input-group-addon">姓名</span>
+        <input type="text" class="form-control" name="name"/>
+    </div>
+    <br />
+    <div class="input-group">
+        <span class="input-group-addon">性别</span>&nbsp;&nbsp;
+        <input type="radio" name="sex" value="男" checked="checked"/>&nbsp;男&nbsp;&nbsp;
+        <input type="radio" name="sex" value="女"/>&nbsp;女
+    </div>
+    <br />
+    <div class="input-group">
+        <span class="input-group-addon">出生日期</span>
+        <input type="date" class="form-control" name="birthday"/>
+    </div>
+    <br />
+    <div class="input-group">
+        <span class="input-group-addon">手机号</span>
+        <input type="number" class="form-control" name="phone"/>
+    </div>
+    <br />
+    <div class="input-group">
+        <span class="input-group-addon">职业</span>
+        <input type="text"  class="form-control" name="profession">
+    </div>
+    <br />
+    <div class="input-group">
+        <span class="input-group-addon">住址</span>
+        <input type="text"  class="form-control" name="address">
+    </div>
+    <br />
+    <div class="input-group">
+        <span class="input-group-addon">咨询内容</span>
+        <input type="text"  class="form-control" name="consult">
+    </div>
+    <br />
+    <div class="btn-group">
+        <button type="submit" class="btn btn-success">确定</button><a href="/prospect_sign/show" class="btn btn-default">返回</a>
+    </div>
+</form>
+</body>
+</html>

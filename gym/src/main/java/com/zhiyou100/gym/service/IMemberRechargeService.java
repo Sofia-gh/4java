@@ -1,14 +1,13 @@
 package com.zhiyou100.gym.service;
 
-import com.zhiyou100.gym.pojo.Cabinet;
-import com.zhiyou100.gym.pojo.CabinetInfo;
+import com.zhiyou100.gym.pojo.MemberRecharge;
 
 import java.util.List;
 
 /**
  * @author Sofia
  */
-public interface ICabinetInfoService {
+public interface IMemberRechargeService {
     /**
      * 对当前页面参数处理
      * @param page
@@ -17,11 +16,11 @@ public interface ICabinetInfoService {
     public int findCurrentPage(Integer page);
 
     /**
-     * 分页查询租柜记录
+     * 分页查询会员充值信息
      * @param page
-     * @return List<CabinetInfo>
+     * @return List<MemberRecharge>
      */
-    public List<CabinetInfo> findByPage(Integer page);
+    public List<MemberRecharge> findByPage(Integer page);
 
     /**
      * 总页数查询
@@ -30,9 +29,10 @@ public interface ICabinetInfoService {
     public int findMaxPage();
 
     /**
-     * 租柜
-     * @param cabinetInfo
+     * 会员充值
+     * @param memberRecharge
      * @return int
      */
-    public int insert(CabinetInfo cabinetInfo);
+    public int insert(MemberRecharge memberRecharge);
+
 }

@@ -31,7 +31,7 @@ public interface IStaffSignService {
     /**
      * 员工签到
      * @param staffSign
-     * @return 0/1
+     * @return int
      */
     public int insert(StaffSign staffSign);
 }

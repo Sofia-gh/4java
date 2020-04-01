@@ -1,13 +1,13 @@
 package com.zhiyou100.gym.service;
 
-import com.zhiyou100.gym.pojo.MemberSign;
+import com.zhiyou100.gym.pojo.MemberTrain;
 
 import java.util.List;
 
 /**
  * @author Sofia
  */
-public interface IMemberSignService {
+public interface IMemberTrainService {
     /**
      * 对当前页面参数处理
      * @param page
@@ -16,11 +16,11 @@ public interface IMemberSignService {
     public int findCurrentPage(Integer page);
 
     /**
-     * 分页查询会员进出场信息
+     * 分页查询会员训练记录
      * @param page
-     * @return List<MemberSign>
+     * @return List<MemberTrain>
      */
-    public List<MemberSign> findByPage(Integer page);
+    public List<MemberTrain> findByPage(Integer page);
 
     /**
      * 总页数查询
@@ -29,16 +29,16 @@ public interface IMemberSignService {
     public int findMaxPage();
 
     /**
-     * 会员进场
-     * @param memberSign
+     * 开始训练
+     * @param memberTrain
      * @return int
      */
-    public int insert(MemberSign memberSign);
+    public int insert(MemberTrain memberTrain);
 
     /**
-     * 会员离场
-     * @param memberSign
+     * 结束训练
+     * @param memberTrain
      * @return int
      */
-    public int update(MemberSign memberSign);
+    public int update(MemberTrain memberTrain);
 }

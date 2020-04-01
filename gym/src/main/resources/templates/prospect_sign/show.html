@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>潜客登记</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <style type="text/css">
+        body{
+            min-height: 400px;
+        }
+        h1{
+            line-height: 60px;
+        }
+        .btn{
+            margin: 20px auto;
+        }
+        .container{
+            margin-top: 50px;
+        }
+        .pagination li{
+            background-color: Window;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1><a href="#">天智健身系统</a></h1>
+    <div class="user">
+        <a href="/user/edit.html">个人中心</a>
+        <a>退出</a>
+    </div>
+</div>
+<div class="container">
+    <ol class="breadcrumb">
+        <span class="active">潜客登记</span>
+    </ol>
+    <a href="/prospect_sign/sign" class="btn btn-default">登记</a>
+    <table id="table" class="table table-bordered">
+        <tr>
+            <td>编号</td>
+            <td>姓名</td>
+            <td>性别</td>
+            <td>出生日期</td>
+            <td>手机号</td>
+            <td>职业</td>
+            <td>住址</td>
+            <td>咨询内容</td>
+            <td>时间</td>
+            <td>状态</td>
+        </tr>
+        <tr th:each="prospect:${prospects}">
+            <td th:text="${prospect.number}"></td>
+            <td th:text="${prospect.name}"></td>
+            <td th:text="${prospect.sex}"></td>
+            <td th:text="${prospect.birthday}"></td>
+            <td th:text="${prospect.phone}"></td>
+            <td th:text="${prospect.profession}"></td>
+            <td th:text="${prospect.address}"></td>
+            <td th:text="${prospect.consult}"></td>
+            <td th:text="${prospect.createTime}"></td>
+            <td th:if="${prospect.status==1}" th:text="已登记"></td>
+            <td th:if="${prospect.status==2}" th:text="转为会员"></td>
+            <td th:if="${prospect.status==0}" th:text="无效记录"></td>
+        </tr>
+    </table>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li>
+                <a th:href="@{/cabinet/show(page=1)}">首页</a>
+            </li>
+
+            <!-- 上一页 -->
+            <li th:if="${currentPage -1 >= 1}">
+                <a th:href="@{/cabinet/show(page=${currentPage}-1)}" th:text="上一页"></a>
+            </li>
+
+            <!-- 中间页 -->
+            <li th:if="${mPage<=5 && mPage>0}" th:each="page:${#numbers.sequence(1, mPage)}">
+                <a th:href="@{/cabinet/show(page=${page})}" th:text="${page}" th:if="${page ne currentPage}"></a>
+                <a th:href="@{/cabinet/show(page=${page})}" th:text="${page}" th:if="${page eq currentPage}" th:style="'font-weight:bold;background: #6faed9;'"></a>
+            </li>
+            <li th:if="${mPage>5 && currentPage<=3}" th:each="page:${#numbers.sequence(1, 5)}">
+                <a th:href="@{/cabinet/show(page=${page})}" th:text="${page}" th:if="${page ne currentPage}"></a>
+                <a th:href="@{/cabinet/show(page=${page})}" th:text="${page}" th:if="${page eq currentPage}" th:style="'font-weight:bold;background: #6faed9;'"></a>
+            </li>
+            <li th:if="${mPage>5 && currentPage>3 && currentPage+2<=mPage}" th:each="page:${#numbers.sequence(currentPage-2,currentPage+2)}">
+                <a th:href="@{/cabinet/show(page=${page})}" th:text="${page}" th:if="${page ne currentPage}"></a>
+                <a th:href="@{/cabinet/show(page=${page})}" th:text="${page}" th:if="${page eq currentPage}" th:style="'font-weight:bold;background: #6faed9;'"></a>
+            </li>
+            <li th:if="${mPage>5 && currentPage>3 && currentPage+2>mPage}" th:each="page:${#numbers.sequence(mPage-4,mPage)}">
+                <a th:href="@{/cabinet/show(page=${page})}" th:text="${page}" th:if="${page ne currentPage}"></a>
+                <a th:href="@{/cabinet/show(page=${page})}" th:text="${page}" th:if="${page eq currentPage}" th:style="'font-weight:bold;background: #6faed9;'"></a>
+            </li>
+
+            <!-- 下一页 -->
+            <li th:if="${currentPage < mPage}">
+                <a th:href="@{/cabinet/show(page=${currentPage+1})}" th:text="下一页"></a>
+            </li>
+
+            <!-- 尾页 -->
+            <li>
+                <a th:href="@{/cabinet/show(page=${mPage})}">尾页</a>
+            </li>
+        </ul>
+    </nav>
+
+</div>
+
+</body>
+</html>

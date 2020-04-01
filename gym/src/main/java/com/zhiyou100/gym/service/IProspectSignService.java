@@ -1,14 +1,13 @@
 package com.zhiyou100.gym.service;
 
-import com.zhiyou100.gym.pojo.Cabinet;
-import com.zhiyou100.gym.pojo.CabinetInfo;
+import com.zhiyou100.gym.pojo.ProspectSign;
 
 import java.util.List;
 
 /**
  * @author Sofia
  */
-public interface ICabinetInfoService {
+public interface IProspectSignService {
     /**
      * 对当前页面参数处理
      * @param page
@@ -17,11 +16,11 @@ public interface ICabinetInfoService {
     public int findCurrentPage(Integer page);
 
     /**
-     * 分页查询租柜记录
+     * 分页查询潜客信息
      * @param page
-     * @return List<CabinetInfo>
+     * @return List<ProspectSign>
      */
-    public List<CabinetInfo> findByPage(Integer page);
+    public List<ProspectSign> findByPage(Integer page);
 
     /**
      * 总页数查询
@@ -30,9 +29,9 @@ public interface ICabinetInfoService {
     public int findMaxPage();
 
     /**
-     * 租柜
-     * @param cabinetInfo
+     * 潜客登记
+     * @param prospectSign
      * @return int
      */
-    public int insert(CabinetInfo cabinetInfo);
+    public int insert(ProspectSign prospectSign);
 }

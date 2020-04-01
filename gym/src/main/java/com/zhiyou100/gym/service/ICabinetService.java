@@ -31,7 +31,7 @@ public interface ICabinetService {
     /**
      * 添加柜子
      * @param cabinet
-     * @return 0/1
+     * @return int
      */
     public int insert(Cabinet cabinet);
 }

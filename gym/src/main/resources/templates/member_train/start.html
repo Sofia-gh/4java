@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <title>开始训练</title>
+    <style>
+        body{
+            min-height: 400px;
+        }
+        h1{
+            line-height: 60px;
+        }
+        .container{
+            margin-top: 50px;
+        }
+        .btn {
+            width:100px;
+            margin:0 0 0 65px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1><a href="#">天智健身系统</a></h1>
+    <div class="user">
+        <a href="/user/edit.html">个人中心</a>
+        <a>退出</a>
+    </div>
+</div>
+<form class="container" method="post" action="/member_train/insert">
+    <ol class="breadcrumb">
+        <span class="active">开始训练</span>
+    </ol>
+    <div class="input-group">
+        <span class="input-group-addon">设备名称</span>
+        <input type="text" class="form-control" name="equipment" value="跑步机"/>
+        <input type="hidden" name="memberNumber" th:value="202003001">
+    </div>
+    <br>
+    <div class="btn-group">
+        <button type="submit" class="btn btn-success">开始训练</button><a href="" class="btn btn-default">返回</a>
+    </div>
+</form>
+</body>
+</html>
