@@ -38,3 +38,16 @@ spring:
 logging:
   level:
     com.zhiyou100.gym.mapper: debug
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count==countSql
+  page-size-zero: true
+
+qiniu:
+  accessKey: x7i-aEH2xnQEeB6G31o386bVCSD744aozCVJUZrn
+  secretKey: 1bCaDWLBHOBRDMQ-qjOqO0kDLsNGHwugRoKH7MQi
+  bucket: 4java
+  path: q7anidury.bkt.clouddn.com

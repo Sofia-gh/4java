@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <title>天智健身系统</title>
+    <style>
+        body{
+            min-height: 400px;
+        }
+        h1{
+            line-height: 60px;
+        }
+        .container{
+            margin-top: 50px;
+        }
+        .btn {
+            width:100px;
+            margin:0 0 0 65px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1><a href="#">天智健身系统</a></h1>
+    <div class="user">
+        <a href="/user/edit.html">个人中心</a>
+        <a>退出</a>
+    </div>
+</div>
+<form class="container" method="post" action="/class/insert">
+    <ol class="breadcrumb">
+        <a href="/class/show">团课管理</a> /
+        <span class="active">添加团课</span>
+    </ol>
+    <div class="input-group">
+        <span class="input-group-addon">团课编号</span>
+        <input type="number" class="form-control" name="number" value="2001"/>
+    </div>
+    <br />
+    <div class="input-group">
+        <span class="input-group-addon">团课名称</span>
+        <input type="text" class="form-control" name="name" value="搏击健美操"/>
+    </div>
+    <br />
+    <div class="input-group">
+        <span class="input-group-addon">团课类型</span>
+        <input type="text" class="form-control" name="type" value="有氧"/>
+    </div>
+    <br />
+    <div class="input-group">
+        <span class="input-group-addon">开始时间</span>
+        <input type="datetime" class="form-control" name="startTime" value="2020-04-01 10:00:00"/>
+    </div>
+    <br />
+    <div class="input-group">
+        <span class="input-group-addon">结束时间</span>
+        <input type="datetime" class="form-control" name="endTime" value="2020-04-01 11:00:00"/>
+    </div>
+    <br />
+    <div class="input-group">
+        <span class="input-group-addon">代课教练</span>
+        <input type="text" class="form-control" name="coach" value="张教练"/>
+    </div>
+    <br />
+    <div class="btn-group">
+        <button type="submit" class="btn btn-success">确定</button><a href="/class/show" class="btn btn-default">返回</a>
+    </div>
+</form>
+</body>
+</html>

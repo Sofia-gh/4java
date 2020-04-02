@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>员工签到</title>
+    <title>天智健身系统</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/admin.css">
     <style type="text/css">
@@ -55,41 +55,41 @@
     </table>
     <nav aria-label="Page navigation">
         <ul class="pagination">
-            <li>
-                <a th:href="@{/cabinet/show(page=1)}">首页</a>
+            <li th:if="${mPage>0}">
+                <a th:href="@{/staff_sign/show(page=1)}">首页</a>
             </li>
 
             <!-- 上一页 -->
             <li th:if="${currentPage -1 >= 1}">
-                <a th:href="@{/cabinet/show(page=${currentPage}-1)}" th:text="上一页"></a>
+                <a th:href="@{/staff_sign/show(page=${currentPage}-1)}" th:text="上一页"></a>
             </li>
 
             <!-- 中间页 -->
             <li th:if="${mPage<=5 && mPage>0}" th:each="page:${#numbers.sequence(1, mPage)}">
-                <a th:href="@{/cabinet/show(page=${page})}" th:text="${page}" th:if="${page ne currentPage}"></a>
-                <a th:href="@{/cabinet/show(page=${page})}" th:text="${page}" th:if="${page eq currentPage}" th:style="'font-weight:bold;background: #6faed9;'"></a>
+                <a th:href="@{/staff_sign/show(page=${page})}" th:text="${page}" th:if="${page ne currentPage}"></a>
+                <a th:href="@{/staff_sign/show(page=${page})}" th:text="${page}" th:if="${page eq currentPage}" th:style="'font-weight:bold;background: #6faed9;'"></a>
             </li>
             <li th:if="${mPage>5 && currentPage<=3}" th:each="page:${#numbers.sequence(1, 5)}">
-                <a th:href="@{/cabinet/show(page=${page})}" th:text="${page}" th:if="${page ne currentPage}"></a>
-                <a th:href="@{/cabinet/show(page=${page})}" th:text="${page}" th:if="${page eq currentPage}" th:style="'font-weight:bold;background: #6faed9;'"></a>
+                <a th:href="@{/staff_sign/show(page=${page})}" th:text="${page}" th:if="${page ne currentPage}"></a>
+                <a th:href="@{/staff_sign/show(page=${page})}" th:text="${page}" th:if="${page eq currentPage}" th:style="'font-weight:bold;background: #6faed9;'"></a>
             </li>
             <li th:if="${mPage>5 && currentPage>3 && currentPage+2<=mPage}" th:each="page:${#numbers.sequence(currentPage-2,currentPage+2)}">
-                <a th:href="@{/cabinet/show(page=${page})}" th:text="${page}" th:if="${page ne currentPage}"></a>
-                <a th:href="@{/cabinet/show(page=${page})}" th:text="${page}" th:if="${page eq currentPage}" th:style="'font-weight:bold;background: #6faed9;'"></a>
+                <a th:href="@{/staff_sign/show(page=${page})}" th:text="${page}" th:if="${page ne currentPage}"></a>
+                <a th:href="@{/staff_sign/show(page=${page})}" th:text="${page}" th:if="${page eq currentPage}" th:style="'font-weight:bold;background: #6faed9;'"></a>
             </li>
             <li th:if="${mPage>5 && currentPage>3 && currentPage+2>mPage}" th:each="page:${#numbers.sequence(mPage-4,mPage)}">
-                <a th:href="@{/cabinet/show(page=${page})}" th:text="${page}" th:if="${page ne currentPage}"></a>
-                <a th:href="@{/cabinet/show(page=${page})}" th:text="${page}" th:if="${page eq currentPage}" th:style="'font-weight:bold;background: #6faed9;'"></a>
+                <a th:href="@{/staff_sign/show(page=${page})}" th:text="${page}" th:if="${page ne currentPage}"></a>
+                <a th:href="@{/staff_sign/show(page=${page})}" th:text="${page}" th:if="${page eq currentPage}" th:style="'font-weight:bold;background: #6faed9;'"></a>
             </li>
 
             <!-- 下一页 -->
             <li th:if="${currentPage < mPage}">
-                <a th:href="@{/cabinet/show(page=${currentPage+1})}" th:text="下一页"></a>
+                <a th:href="@{/staff_sign/show(page=${currentPage+1})}" th:text="下一页"></a>
             </li>
 
             <!-- 尾页 -->
-            <li>
-                <a th:href="@{/cabinet/show(page=${mPage})}">尾页</a>
+            <li th:if="${mPage>0}">
+                <a th:href="@{/staff_sign/show(page=${mPage})}">尾页</a>
             </li>
         </ul>
     </nav>
