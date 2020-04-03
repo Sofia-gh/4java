@@ -19,11 +19,11 @@ public class CoachController {
     private ICoachService coachService;
 
     @RequestMapping("show")
-    public String show(Integer page, Model model){
+    public String show(Integer page,String key, Model model){
         int currentPage = coachService.findCurrentPage(page);
         model.addAttribute("currentPage",currentPage);
-        model.addAttribute("coaches",coachService.findByPage(currentPage));
-        model.addAttribute("mPage",coachService.findMaxPage());
+        model.addAttribute("coaches",coachService.findByPage(currentPage,key));
+        model.addAttribute("mPage",coachService.findMaxPage(key));
         return "coach/show";
     }
 
@@ -48,6 +48,16 @@ public class CoachController {
     public String update(Coach coach,@RequestParam("file")MultipartFile file){
         coachService.update(coach,file);
         return "redirect:show";
+    }
+
+    @RequestMapping("find")
+    public String find(Integer page,String key, Model model){
+        int currentPage = coachService.findCurrentPage(page);
+        model.addAttribute("currentPage",currentPage);
+        model.addAttribute("key",key);
+        model.addAttribute("coaches",coachService.findByPage(currentPage,key));
+        model.addAttribute("mPage",coachService.findMaxPage(key));
+        return "coach/find";
     }
 
 }

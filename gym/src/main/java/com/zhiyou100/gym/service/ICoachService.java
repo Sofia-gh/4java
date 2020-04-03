@@ -19,15 +19,17 @@ public interface ICoachService {
     /**
      * 分页查询教练信息
      * @param page
+     * @param key
      * @return List<Coach>
      */
-    public List<Coach> findByPage(Integer page);
+    public List<Coach> findByPage(Integer page,String key);
 
     /**
      * 总页数查询
+     * @param key
      * @return mPage
      */
-    public int findMaxPage();
+    public int findMaxPage(String key);
 
     /**
      * 添加教练信息
@@ -50,10 +52,4 @@ public interface ICoachService {
      */
     public int update(Coach coach,MultipartFile file);
 
-    /**
-     * 搜索
-     * @param key
-     * @return List<Coach>
-     */
-    public List<Coach> findByKey(String key);
 }

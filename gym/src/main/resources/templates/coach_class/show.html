@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>天智健身系统</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <style type="text/css">
+        body{
+            min-height: 400px;
+        }
+        h1{
+            line-height: 60px;
+        }
+        .btn{
+            margin: 20px auto;
+        }
+        .container{
+            margin-top: 50px;
+        }
+        .pagination li{
+            background-color: Window;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1><a href="#">天智健身系统</a></h1>
+    <div class="user">
+        <a href="/user/edit.html">个人中心</a>
+        <a>退出</a>
+    </div>
+</div>
+<div class="container">
+    <ol class="breadcrumb">
+        <a href="/coach_class/show">教练课程管理</a> /
+        <span class="active">信息展示</span>
+    </ol>
+    <a href="/coach_class/add" class="btn btn-default">添加课程</a>
+    <table id="table" class="table table-bordered">
+        <tr>
+            <td>课程编号</td>
+            <td>教练编号</td>
+            <td>课程名称</td>
+            <td>课程标签</td>
+            <td>开始时间</td>
+            <td>结束时间</td>
+            <td>预订会员</td>
+            <td>状态</td>
+            <td>操作</td>
+        </tr>
+        <tr th:each="class:${classes}">
+            <td th:text="${class.number}"></td>
+            <td th:text="${class.coachNumber}"></td>
+            <td th:text="${class.name}"></td>
+            <td th:text="${class.label}"></td>
+            <td th:text="${class.startTime}"></td>
+            <td th:text="${class.endTime}"></td>
+            <td th:if="${class.coachOrder != null}" th:text="${class.coachOrder.memberNumber}"></td>
+            <td th:if="${class.coachOrder == null}" th:text="未预订"></td>
+            <td th:if="${class.status==1}" th:text="报名中"></td>
+            <td th:if="${class.status==2}" th:text="报名截止"></td>
+            <td th:if="${class.status==3}" th:text="已销课"></td>
+            <td>
+                <a th:href="@{/coach_class/edit(id=${class.id})}">修改课程信息</a>
+                <a th:href="@{/coach_class/delete(id=${class.id})}">删除课程</a>
+                <a th:if="${class.status==1}" th:href="@{/coach_class/end(id=${class.id})}">截止报名</a>
+                <a th:if="${class.coachOrder != null}" th:href="@{/coach_class/finish(id=${class.id})}">销课</a>
+                <!--todo 判断登录权限-->
+                <a  th:if="${class.status==1}" th:href="@{/coach_order/order(coachClassNumber=${class.number})}">预定课程</a>
+            </td>
+        </tr>
+    </table>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li th:if="${mPage>0}">
+                <a th:href="@{/coach_class/show(page=1)}">首页</a>
+            </li>
+
+            <!-- 上一页 -->
+            <li th:if="${currentPage -1 >= 1}">
+                <a th:href="@{/coach_class/show(page=${currentPage}-1)}" th:text="上一页"></a>
+            </li>
+
+            <!-- 中间页 -->
+            <li th:if="${mPage<=5 && mPage>0}" th:each="page:${#numbers.sequence(1, mPage)}">
+                <a th:href="@{/coach_class/show(page=${page})}" th:text="${page}" th:if="${page ne currentPage}"></a>
+                <a th:href="@{/coach_class/show(page=${page})}" th:text="${page}" th:if="${page eq currentPage}" th:style="'font-weight:bold;background: #6faed9;'"></a>
+            </li>
+            <li th:if="${mPage>5 && currentPage<=3}" th:each="page:${#numbers.sequence(1, 5)}">
+                <a th:href="@{/coach_class/show(page=${page})}" th:text="${page}" th:if="${page ne currentPage}"></a>
+                <a th:href="@{/coach_class/show(page=${page})}" th:text="${page}" th:if="${page eq currentPage}" th:style="'font-weight:bold;background: #6faed9;'"></a>
+            </li>
+            <li th:if="${mPage>5 && currentPage>3 && currentPage+2<=mPage}" th:each="page:${#numbers.sequence(currentPage-2,currentPage+2)}">
+                <a th:href="@{/coach_class/show(page=${page})}" th:text="${page}" th:if="${page ne currentPage}"></a>
+                <a th:href="@{/coach_class/show(page=${page})}" th:text="${page}" th:if="${page eq currentPage}" th:style="'font-weight:bold;background: #6faed9;'"></a>
+            </li>
+            <li th:if="${mPage>5 && currentPage>3 && currentPage+2>mPage}" th:each="page:${#numbers.sequence(mPage-4,mPage)}">
+                <a th:href="@{/coach_class/show(page=${page})}" th:text="${page}" th:if="${page ne currentPage}"></a>
+                <a th:href="@{/coach_class/show(page=${page})}" th:text="${page}" th:if="${page eq currentPage}" th:style="'font-weight:bold;background: #6faed9;'"></a>
+            </li>
+
+            <!-- 下一页 -->
+            <li th:if="${currentPage < mPage}">
+                <a th:href="@{/coach_class/show(page=${currentPage+1})}" th:text="下一页"></a>
+            </li>
+
+            <!-- 尾页 -->
+            <li th:if="${mPage>0}">
+                <a th:href="@{/coach_class/show(page=${mPage})}">尾页</a>
+            </li>
+        </ul>
+    </nav>
+
+</div>
+
+</body>
+</html>

@@ -10,6 +10,7 @@ import com.zhiyou100.gym.util.QiniuUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -40,14 +41,22 @@ public class CoachService implements ICoachService {
     }
 
     @Override
-    public List<Coach> findByPage(Integer page) {
+    public List<Coach> findByPage(Integer page,String key) {
         IPage<Coach> coachIPage = new Page<>(page,10);
-        return coachMapper.selectPage(coachIPage,null).getRecords();
+        if (StringUtils.isEmpty(key)){
+            return coachMapper.selectPage(coachIPage,null).getRecords();
+        }
+        return coachMapper.selectPage(coachIPage,new QueryWrapper<Coach>().like("name",key).or().like("label",key)).getRecords();
     }
 
     @Override
-    public int findMaxPage() {
-        int count = coachMapper.selectCount(null);
+    public int findMaxPage(String key) {
+        int count;
+        if (StringUtils.isEmpty(key)){
+            count = coachMapper.selectCount(null);
+        }else {
+            count = coachMapper.selectCount(new QueryWrapper<Coach>().like("name",key).or().like("label",key));
+        }
         int mPage = count / 10;
         if (count % 10 != 0) {
             mPage ++;
@@ -99,10 +108,5 @@ public class CoachService implements ICoachService {
         }
         coach.setUpdateTime(Timestamp.valueOf(LocalDateTime.now()));
         return coachMapper.updateById(coach);
-    }
-
-    @Override
-    public List<Coach> findByKey(String key) {
-        return coachMapper.selectList(new QueryWrapper<Coach>().like("name",key).or().like("label",key));
     }
 }

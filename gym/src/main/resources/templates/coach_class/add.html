@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <title>天智健身系统</title>
+    <style>
+        body{
+            min-height: 400px;
+        }
+        h1{
+            line-height: 60px;
+        }
+        .container{
+            margin-top: 50px;
+        }
+        .btn {
+            width:100px;
+            margin:0 0 0 65px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1><a href="#">天智健身系统</a></h1>
+    <div class="user">
+        <a href="/user/edit.html">个人中心</a>
+        <a>退出</a>
+    </div>
+</div>
+<form class="container" method="post" action="/coach_class/insert">
+    <ol class="breadcrumb">
+        <a href="/coach_class/show">教练课程管理</a> /
+        <span class="active">添加课程</span>
+    </ol>
+    <input type="hidden" name="coachNumber" value="22020001">
+    <div class="input-group">
+        <span class="input-group-addon">课程名称</span>
+        <input type="text" class="form-control" name="name" value="搏击"/>
+    </div>
+    <br />
+    <div class="input-group">
+        <span class="input-group-addon">课程标签</span>
+        <input type="text" class="form-control" name="label" value="有氧"/>
+    </div>
+    <br />
+    <div class="input-group">
+        <span class="input-group-addon">开始时间</span>
+        <input type="datetime" class="form-control" name="startTime" value="2020-04-01 10:00:00"/>
+    </div>
+    <br />
+    <div class="input-group">
+        <span class="input-group-addon">结束时间</span>
+        <input type="datetime" class="form-control" name="endTime" value="2020-04-01 11:00:00"/>
+    </div>
+    <br />
+    <div class="btn-group">
+        <button type="submit" class="btn btn-success">确定</button><a href="/coach_class/show" class="btn btn-default">返回</a>
+    </div>
+</form>
+</body>
+</html>
