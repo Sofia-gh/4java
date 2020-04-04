@@ -56,7 +56,10 @@
             <td th:text="${class.label}"></td>
             <td th:text="${class.startTime}"></td>
             <td th:text="${class.endTime}"></td>
-            <td th:if="${class.coachOrder != null}" th:text="${class.coachOrder.memberNumber}"></td>
+            <td th:if="${class.coachOrder != null}">
+                <span th:text="${class.coachOrder.memberNumber}"></span><br/>
+                <a th:href="@{/member/member(number=${class.coachOrder.memberNumber})}">点击查看学员信息</a>
+            </td>
             <td th:if="${class.coachOrder == null}" th:text="未预订"></td>
             <td th:if="${class.status==1}" th:text="报名中"></td>
             <td th:if="${class.status==2}" th:text="报名截止"></td>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <title>天智健身系统</title>
+    <style>
+        body{
+            min-height: 400px;
+        }
+        h1{
+            line-height: 60px;
+        }
+        .container{
+            margin-top: 50px;
+        }
+        .btn {
+            width:100px;
+            margin:0 0 0 65px;
+        }
+    </style>
+</head>
+<body>
+<div class="header">
+    <h1><a href="#">天智健身系统</a></h1>
+    <div class="user">
+        <a href="../user/edit.html">个人中心</a>
+        <a>退出</a>
+    </div>
+</div>
+<div class="container">
+    <ol class="breadcrumb">
+        <a href="/coach_class/show">课程管理</a> /
+        <span class="active">学员信息查看</span>
+    </ol>
+    <div class="input-group">
+        <span class="input-group-addon">编号</span>
+        <input type="number" class="form-control" th:value="${member.number}" readonly/>
+    </div>
+    <br />
+    <div class="input-group">
+        <span class="input-group-addon">姓名</span>
+        <input type="text" class="form-control" th:value="${member.name}" readonly/>
+    </div>
+    <br />
+    <div class="input-group">
+        <span class="input-group-addon">性别</span>
+        <input type="text" class="form-control" th:value="${member.sex}" readonly/>
+    </div>
+    <br />
+    <div class="input-group">
+        <span class="input-group-addon">出生日期</span>
+        <input type="date" class="form-control" th:value="${member.birthday}" readonly/>
+    </div>
+    <br />
+    <div class="input-group">
+        <span class="input-group-addon">手机号</span>
+        <input type="number" class="form-control" th:value="${member.phone}" readonly/>
+    </div>
+    <br />
+    <div class="input-group">
+        <span class="input-group-addon">卡类型</span>
+        <input type="text" class="form-control" th:value="${member.card.type}" readonly/>
+    </div>
+    <br />
+    <div class="input-group">
+        <span class="input-group-addon">开始有效</span>
+        <input type="date" class="form-control" th:value="${member.startTime}" readonly/>
+    </div>
+    <br />
+    <div class="input-group">
+        <span class="input-group-addon">过期时间</span>
+        <input type="date" class="form-control" th:value="${member.endTime}" readonly/>
+    </div>
+    <br />
+    <div class="input-group">
+        <span class="input-group-addon">状态</span>
+        <input type="text" class="form-control" th:value="${member.status==1?'正常':'未缴费'}" readonly/>
+    </div>
+    <br />
+</div>
+</body>
+</html>

@@ -90,3 +90,14 @@
 	});
 - 实现了三层表关联
 - 明天完成：会员管理--》会员卡管理--》学员管理
+# 04.04
+### 完成任务
+会员管理、会员卡管理、学员管理
+### 出现问题
+- 使用mybatis注解方式两表关联
+- Thymeleaf中select标签的使用
+  ```html
+  <select  class="form-control" name="cardNumber">
+      <option th:each="card:${cards}" th:value="${card.number}" th:text="${card.type}" th:selected="${member.cardNumber eq card.number}"></option>
+  </select>
+  ```
