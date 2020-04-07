@@ -64,8 +64,8 @@
             <td th:if="${coach.status==1}" th:text="正式"></td>
             <td th:if="${coach.status==2}" th:text="实习"></td>
             <td th:if="${coach.status==3}" th:text="试用"></td>
-            <td th:if="${coach.status==0}" th:text="离职"></td>
-            <td th:if="${coach.status==-1}" th:text="辞退"></td>
+            <td th:if="${coach.status==4}" th:text="离职"></td>
+            <td th:if="${coach.status==5}" th:text="辞退"></td>
             <td>
                 <a th:href="@{/coach/edit(id=${coach.id})}">修改信息</a>
             </td>
