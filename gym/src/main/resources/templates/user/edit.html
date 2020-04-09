@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <title>天智健身系统</title>
+    <style>
+        body{
+            min-height: 400px;
+        }
+        h1{
+            line-height: 60px;
+        }
+        .container{
+            margin-top: 50px;
+        }
+        .btn {
+            width:100px;
+            margin:0 0 0 65px;
+        }
+    </style>
+</head>
+<body>
+<form class="container" method="post" action="/user/update">
+    <ol class="breadcrumb">
+        <a href="/user/show">用户管理</a> /
+        <span class="active">修改用户信息</span>
+    </ol>
+    <input type="hidden" name="id" th:value="${user.id}">
+    <div class="input-group">
+        <span class="input-group-addon">账号</span>
+        <input type="text" class="form-control" name="account"th:value="${user.account}" readonly/>
+    </div>
+    <br />
+    <div class="input-group">
+        <span class="input-group-addon">密码</span>
+        <input type="password" class="form-control" name="password"th:value="${user.password}"/>
+    </div>
+    <br />
+    <div class="input-group">
+        <span class="input-group-addon">用户编号</span>
+        <input type="number" class="form-control" name="number" th:value="${user.number}"/>
+    </div>
+    <br />
+    <div class="input-group">
+        <span class="input-group-addon">角色</span>
+        <select class="form-control" name="roleId">
+            <option  th:each="role:${roles}" th:text="${role.name}" th:value="${role.id}" th:selected="${role.id == user.roleId}"></option>
+        </select>
+    </div>
+    <br />
+    <div class="btn-group">
+        <button type="submit" class="btn btn-success">确定</button><a href="/user/show" class="btn btn-default">返回</a>
+    </div>
+</form>
+</body>
+</html>
