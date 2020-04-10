@@ -16,11 +16,12 @@ import java.util.List;
 /**
  * @author Sofia
  */
-@Service
-public class AchievementService implements IAchievementService {
+@Service("achievementService")
+public class AchievementServiceImpl implements IAchievementService {
     @Autowired
     private IAchievementMapper achievementMapper;
 
+    private static final int KEY = 10;
     @Override
     public int findCurrentPage(Integer page){
         if (page == null || page < 1) {
@@ -31,15 +32,15 @@ public class AchievementService implements IAchievementService {
 
     @Override
     public List<Achievement> findByPage(Integer page) {
-        IPage<Achievement> achievementIPage = new Page<>(page,10);
-        return achievementMapper.selectPage(achievementIPage,null).getRecords();
+        IPage<Achievement> achievementPage = new Page<>(page,KEY);
+        return achievementMapper.selectPage(achievementPage,null).getRecords();
     }
 
     @Override
     public int findMaxPage() {
         int count = achievementMapper.selectCount(null);
-        int mPage = count / 10;
-        if (count % 10 != 0) {
+        int mPage = count / KEY;
+        if (count % KEY != 0) {
             mPage ++;
         }
         return mPage;

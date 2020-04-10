@@ -16,10 +16,12 @@ import java.util.List;
 /**
  * @author Sofia
  */
-@Service
-public class CardService implements ICardService {
+@Service("cardService")
+public class CardServiceImpl implements ICardService {
     @Autowired
     private ICardMapper cardMapper;
+
+    private static final int KEY = 10;
 
     @Override
     public int findCurrentPage(Integer page){
@@ -31,10 +33,10 @@ public class CardService implements ICardService {
 
     @Override
     public List<Card> findByPage(Integer page) {
-        IPage<Card> cardIPage = new Page<>(page,10);
+        IPage<Card> cardPage = new Page<>(page,KEY);
         Card card = new Card();
         card.setStatus(1);
-        return cardMapper.selectPage(cardIPage,new QueryWrapper<>(card)).getRecords();
+        return cardMapper.selectPage(cardPage,new QueryWrapper<>(card)).getRecords();
     }
 
     @Override
@@ -42,8 +44,8 @@ public class CardService implements ICardService {
         Card card = new Card();
         card.setStatus(1);
         int count = cardMapper.selectCount(new QueryWrapper<>(card));
-        int mPage = count / 10;
-        if (count % 10 != 0) {
+        int mPage = count / KEY;
+        if (count % KEY != 0) {
             mPage ++;
         }
         return mPage;

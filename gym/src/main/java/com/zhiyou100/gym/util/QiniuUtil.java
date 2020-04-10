@@ -21,23 +21,31 @@ import java.io.FileInputStream;
  *
  */
 @Component
-//使用log.info打印日志数据
 @Slf4j
-//ConfigurationProperties这个注解一般和@Value注解来比较
-//之前我们获取配置文件中的数据使用@Value注解
-//该注解有一个prefix属性，前缀，前缀都是qiniu，会将值存储到属性名和配置文件名一样的变量中
 @ConfigurationProperties(prefix = "qiniu")
 @Data
 public class QiniuUtil {
 
-//    @Value("${qiniu.accessKey}")
-    private String accessKey;//存储AK
-//    @Value("${qiniu.secretKey}")
-    private String secretKey;//存储SK
-//    @Value("${qiniu.bucket}")
-    private String bucket;//存储空间名
-//    @Value("${qiniu.path}")
-    private String path;//存储域名
+    /**
+     * @Value("${qiniu.accessKey}")
+     * 存储AK
+      */
+    private String accessKey;
+    /**
+    * @Value("${qiniu.secretKey}")
+     * 存储SK
+     */
+    private String secretKey;
+    /**
+     * @Value("${qiniu.bucket}")
+     * 存储空间名
+     */
+    private String bucket;
+    /**
+     * @Value("${qiniu.path}")
+     * 存储域名
+      */
+    private String path;
 
     /**
      * 将图片上传到七牛云
@@ -58,9 +66,9 @@ public class QiniuUtil {
                 Response response = uploadManager.put(file, name, upToken, null, null);
                 //解析上传成功的结果
                 DefaultPutRet putRet = JSON.parseObject(response.bodyString(), DefaultPutRet.class);
-                String return_path = path + "/" + putRet.key;
-                log.info("保存地址={}", return_path);
-                return return_path;
+                String returnPath = path + "/" + putRet.key;
+                log.info("保存地址={}", returnPath);
+                return returnPath;
             } catch (QiniuException ex) {
                 System.out.println("ex===>");
                 Response r = ex.response;
@@ -77,7 +85,7 @@ public class QiniuUtil {
         return "";
     }
 
-    /*
+    /**
      * @param file
      * @param newName:新文件的名字
      * @param oldName:旧文件的名字
@@ -92,12 +100,9 @@ public class QiniuUtil {
                 Response response = uploadManager.put(file, newName, upToken, null, null);
                 //解析上传成功的结果
                 DefaultPutRet putRet = JSON.parseObject(response.bodyString(), DefaultPutRet.class);
-//                DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
-//                System.out.println(putRet.key);
-//                System.out.println(putRet.hash);
-                String return_path = path + "/" + putRet.key;
-                log.info("保存地址={}", return_path);
-                return return_path;
+                String returnPath = path + "/" + putRet.key;
+                log.info("保存地址={}", returnPath);
+                return returnPath;
             } catch (QiniuException ex) {
                 Response r = ex.response;
                 System.err.println(r.toString());

@@ -16,10 +16,12 @@ import java.util.List;
 /**
  * @author Sofia
  */
-@Service
-public class MemberSignService implements IMemberSignService {
+@Service("memberSignService")
+public class MemberSignServiceImpl implements IMemberSignService {
     @Autowired
     private IMemberSignMapper memberSignMapper;
+
+    private static final int KEY = 10;
 
     @Override
     public int findCurrentPage(Integer page){
@@ -31,15 +33,15 @@ public class MemberSignService implements IMemberSignService {
 
     @Override
     public List<MemberSign> findByPage(Integer page) {
-        IPage<MemberSign> memberSignIPage = new Page<>(page,10);
-        return memberSignMapper.selectPage(memberSignIPage,null).getRecords();
+        IPage<MemberSign> memberSignPage = new Page<>(page,KEY);
+        return memberSignMapper.selectPage(memberSignPage,null).getRecords();
     }
 
     @Override
     public int findMaxPage() {
         int count = memberSignMapper.selectCount(null);
-        int mPage = count / 10;
-        if (count % 10 != 0) {
+        int mPage = count / KEY;
+        if (count % KEY != 0) {
             mPage ++;
         }
         return mPage;

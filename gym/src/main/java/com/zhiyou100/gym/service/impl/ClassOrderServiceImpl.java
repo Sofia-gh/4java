@@ -18,10 +18,12 @@ import java.util.List;
 /**
  * @author Sofia
  */
-@Service
-public class ClassOrderService implements IClassOrderService {
+@Service("classOrderService")
+public class ClassOrderServiceImpl implements IClassOrderService {
     @Autowired
     private IClassOrderMapper classOrderMapper;
+
+    private static final int KEY = 10;
 
     @Override
     public int findCurrentPage(Integer page){
@@ -33,15 +35,15 @@ public class ClassOrderService implements IClassOrderService {
 
     @Override
     public List<ClassOrder> findByPage(Integer page,ClassOrder classOrder) {
-        IPage<ClassOrder> classOrderIPage = new Page<>(page,10);
-        return classOrderMapper.selectPage(classOrderIPage,new QueryWrapper<>(classOrder)).getRecords();
+        IPage<ClassOrder> classOrderPage = new Page<>(page,KEY);
+        return classOrderMapper.selectPage(classOrderPage,new QueryWrapper<>(classOrder)).getRecords();
     }
 
     @Override
     public int findMaxPage(ClassOrder classOrder) {
         int count = classOrderMapper.selectCount(new QueryWrapper<>(classOrder));
-        int mPage = count / 10;
-        if (count % 10 != 0) {
+        int mPage = count / KEY;
+        if (count % KEY != 0) {
             mPage ++;
         }
         return mPage;
@@ -64,8 +66,8 @@ public class ClassOrderService implements IClassOrderService {
     @Override
     public List<ClassOrder> findByMemberNumber(Integer page,Integer memberNumber) {
         PageHelper.startPage(page,10);
-        PageInfo<ClassOrder> classOrderIPage = new PageInfo<>(classOrderMapper.selectPageByMemberNumber(memberNumber));
-        return classOrderIPage.getList();
+        PageInfo<ClassOrder> classOrderPageInfo = new PageInfo<>(classOrderMapper.selectPageByMemberNumber(memberNumber));
+        return classOrderPageInfo.getList();
     }
 
 }

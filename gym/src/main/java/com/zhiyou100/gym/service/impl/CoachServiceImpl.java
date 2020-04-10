@@ -25,12 +25,14 @@ import java.util.Random;
 /**
  * @author Sofia
  */
-@Service
-public class CoachService implements ICoachService {
+@Service("coachService")
+public class CoachServiceImpl implements ICoachService {
     @Autowired
     private ICoachMapper coachMapper;
     @Autowired
     private QiniuUtil qiniuUtil;
+
+    private static final int KEY = 10;
 
     @Override
     public int findCurrentPage(Integer page){
@@ -42,11 +44,11 @@ public class CoachService implements ICoachService {
 
     @Override
     public List<Coach> findByPage(Integer page,String key) {
-        IPage<Coach> coachIPage = new Page<>(page,10);
+        IPage<Coach> coachPage = new Page<>(page,KEY);
         if (StringUtils.isEmpty(key)){
-            return coachMapper.selectPage(coachIPage,null).getRecords();
+            return coachMapper.selectPage(coachPage,null).getRecords();
         }
-        return coachMapper.selectPage(coachIPage,new QueryWrapper<Coach>().like("name",key).or().like("label",key)).getRecords();
+        return coachMapper.selectPage(coachPage,new QueryWrapper<Coach>().like("name",key).or().like("label",key)).getRecords();
     }
 
     @Override
@@ -57,8 +59,8 @@ public class CoachService implements ICoachService {
         }else {
             count = coachMapper.selectCount(new QueryWrapper<Coach>().like("name",key).or().like("label",key));
         }
-        int mPage = count / 10;
-        if (count % 10 != 0) {
+        int mPage = count / KEY;
+        if (count % KEY != 0) {
             mPage ++;
         }
         return mPage;

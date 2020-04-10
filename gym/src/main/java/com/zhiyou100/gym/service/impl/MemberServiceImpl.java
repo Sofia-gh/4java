@@ -16,10 +16,12 @@ import java.util.List;
 /**
  * @author Sofia
  */
-@Service
-public class MemberService implements IMemberService {
+@Service("memberService")
+public class MemberServiceImpl implements IMemberService {
     @Autowired
     private IMemberMapper memberMapper;
+
+    private static final int KEY = 10;
 
     @Override
     public int findCurrentPage(Integer page){
@@ -31,7 +33,7 @@ public class MemberService implements IMemberService {
 
     @Override
     public List<Member> findByPage(Integer page, String key) {
-        PageHelper.startPage(page,10);
+        PageHelper.startPage(page,KEY);
         List<Member> members = null;
         if (StringUtils.isEmpty(key)){
             members = memberMapper.findAll();
@@ -49,8 +51,8 @@ public class MemberService implements IMemberService {
         }else {
             count = memberMapper.findCount(key);
         }
-        int mPage = count / 10;
-        if (count % 10 != 0) {
+        int mPage = count / KEY;
+        if (count % KEY != 0) {
             mPage ++;
         }
         return mPage;

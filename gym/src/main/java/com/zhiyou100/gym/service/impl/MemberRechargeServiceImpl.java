@@ -2,12 +2,13 @@ package com.zhiyou100.gym.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.zhiyou100.gym.mapper.IProspectSignMapper;
-import com.zhiyou100.gym.pojo.ProspectSign;
-import com.zhiyou100.gym.service.IProspectSignService;
+import com.zhiyou100.gym.mapper.IMemberRechargeMapper;
+import com.zhiyou100.gym.pojo.MemberRecharge;
+import com.zhiyou100.gym.service.IMemberRechargeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,10 +16,12 @@ import java.util.List;
 /**
  * @author Sofia
  */
-@Service
-public class ProspectSignService implements IProspectSignService {
+@Service("memberRechargeService")
+public class MemberRechargeServiceImpl implements IMemberRechargeService {
     @Autowired
-    private IProspectSignMapper prospectSignMapper;
+    private IMemberRechargeMapper memberRechargeMapper;
+
+    private static final int KEY = 10;
 
     @Override
     public int findCurrentPage(Integer page){
@@ -29,27 +32,28 @@ public class ProspectSignService implements IProspectSignService {
     }
 
     @Override
-    public List<ProspectSign> findByPage(Integer page) {
-        IPage<ProspectSign> prospectSignIPage = new Page<>(page,10);
-        return prospectSignMapper.selectPage(prospectSignIPage,null).getRecords();
+    public List<MemberRecharge> findByPage(Integer page) {
+        IPage<MemberRecharge> memberRechargePage = new Page<>(page,KEY);
+        return memberRechargeMapper.selectPage(memberRechargePage,null).getRecords();
     }
 
     @Override
     public int findMaxPage() {
-        int count = prospectSignMapper.selectCount(null);
-        int mPage = count / 10;
-        if (count % 10 != 0) {
+        int count = memberRechargeMapper.selectCount(null);
+        int mPage = count / KEY;
+        if (count % KEY != 0) {
             mPage ++;
         }
         return mPage;
     }
 
     @Override
-    public int insert(ProspectSign prospectSign) {
+    public int insert(MemberRecharge memberRecharge) {
         LocalDateTime now = LocalDateTime.now();
         long number = Long.valueOf(String.valueOf(now.getYear())+String.valueOf(now.getMonthValue())+String.valueOf(now.getDayOfMonth())+String.valueOf(Instant.now().getEpochSecond()));
-        prospectSign.setNumber(number);
-        return prospectSignMapper.insert(prospectSign);
+        memberRecharge.setNumber(number);
+        return memberRechargeMapper.insert(memberRecharge);
     }
+
 
 }

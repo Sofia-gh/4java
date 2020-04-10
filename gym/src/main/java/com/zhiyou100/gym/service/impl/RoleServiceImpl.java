@@ -8,12 +8,11 @@ import com.zhiyou100.gym.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
-public class RoleService implements IRoleService {
+@Service("roleService")
+public class RoleServiceImpl implements IRoleService {
 
 	@Autowired
 	private IRoleMapper roleMapper;
-
 
 	@Override
 	public List<Role> findAll() {

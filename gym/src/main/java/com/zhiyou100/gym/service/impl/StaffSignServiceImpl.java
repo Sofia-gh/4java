@@ -15,10 +15,12 @@ import java.util.List;
 /**
  * @author Sofia
  */
-@Service
-public class StaffSignService implements IStaffSignService {
+@Service("staffSignService")
+public class StaffSignServiceImpl implements IStaffSignService {
     @Autowired
     private IStaffSignMapper staffSignMapper;
+
+    private static final int KEY = 10;
 
     @Override
     public int findCurrentPage(Integer page){
@@ -30,15 +32,15 @@ public class StaffSignService implements IStaffSignService {
 
     @Override
     public List<StaffSign> findByPage(Integer page) {
-        IPage<StaffSign> staffSignIPage = new Page<>(page,10);
-        return staffSignMapper.selectPage(staffSignIPage,null).getRecords();
+        IPage<StaffSign> staffSignPage = new Page<>(page,KEY);
+        return staffSignMapper.selectPage(staffSignPage,null).getRecords();
     }
 
     @Override
     public int findMaxPage() {
         int count = staffSignMapper.selectCount(null);
-        int mPage = count / 10;
-        if (count % 10 != 0) {
+        int mPage = count / KEY;
+        if (count % KEY != 0) {
             mPage ++;
         }
         return mPage;

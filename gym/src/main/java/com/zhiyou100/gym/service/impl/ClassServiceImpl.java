@@ -15,10 +15,12 @@ import java.util.List;
 /**
  * @author Sofia
  */
-@Service
-public class ClassService implements IClassService {
+@Service("classService")
+public class ClassServiceImpl implements IClassService {
     @Autowired
     private IClassMapper classMapper;
+
+    private static final int KEY = 10;
 
     @Override
     public int findCurrentPage(Integer page){
@@ -30,15 +32,15 @@ public class ClassService implements IClassService {
 
     @Override
     public List<Class> findByPage(Integer page) {
-        IPage<Class> classIPage = new Page<>(page,10);
-        return classMapper.selectPage(classIPage,null).getRecords();
+        IPage<Class> classPage = new Page<>(page,KEY);
+        return classMapper.selectPage(classPage,null).getRecords();
     }
 
     @Override
     public int findMaxPage() {
         int count = classMapper.selectCount(null);
-        int mPage = count / 10;
-        if (count % 10 != 0) {
+        int mPage = count / KEY;
+        if (count % KEY != 0) {
             mPage ++;
         }
         return mPage;

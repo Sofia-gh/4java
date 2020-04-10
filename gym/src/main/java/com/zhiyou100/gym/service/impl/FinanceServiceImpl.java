@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-public class FinanceService implements IFinanceService {
+@Service("financeService")
+public class FinanceServiceImpl implements IFinanceService {
     @Autowired
     private IMemberRechargeMapper memberRechargeMapper;
     @Autowired

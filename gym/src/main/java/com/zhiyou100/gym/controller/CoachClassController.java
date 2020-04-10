@@ -22,11 +22,12 @@ import java.util.List;
 public class CoachClassController {
     @Autowired
     private ICoachClassService coachClassService;
+    public static final String KEY = "教练";
 
     @RequestMapping("show")
     public String show(Integer coachNumber,Integer page, Model model){
         User user = (User) SecurityUtils.getSubject().getPrincipal();
-        if (user.getRole().getName().equals("教练")){
+        if (user.getRole().getName().equals(KEY)){
             coachNumber = user.getNumber();
         }
         int currentPage = coachClassService.findCurrentPage(page);

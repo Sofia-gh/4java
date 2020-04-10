@@ -20,10 +20,12 @@ import java.util.List;
 /**
  * @author Sofia
  */
-@Service
-public class SchedulerService implements ISchedulerService {
+@Service("schedulerService")
+public class SchedulerServiceImpl implements ISchedulerService {
     @Autowired
     private ISchedulerMapper schedulerMapper;
+
+    private static final int KEY = 10;
 
     @Override
     public int findCurrentPage(Integer page){
@@ -35,10 +37,10 @@ public class SchedulerService implements ISchedulerService {
 
     @Override
     public List<Scheduler> findByPage(Integer page,Integer number) {
-        IPage<Scheduler> schedulerIPage = new Page<>(page,10);
+        IPage<Scheduler> schedulerPage = new Page<>(page,KEY);
         Scheduler scheduler = new Scheduler();
         scheduler.setCoachNumber(number);
-        return schedulerMapper.selectPage(schedulerIPage,new QueryWrapper<>(scheduler)).getRecords();
+        return schedulerMapper.selectPage(schedulerPage,new QueryWrapper<>(scheduler)).getRecords();
     }
 
     @Override
@@ -46,8 +48,8 @@ public class SchedulerService implements ISchedulerService {
         Scheduler scheduler = new Scheduler();
         scheduler.setCoachNumber(number);
         int count = schedulerMapper.selectCount(new QueryWrapper<>(scheduler));
-        int mPage = count / 10;
-        if (count % 10 != 0) {
+        int mPage = count / KEY;
+        if (count % KEY != 0) {
             mPage ++;
         }
         return mPage;

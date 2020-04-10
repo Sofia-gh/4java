@@ -8,7 +8,6 @@ import com.zhiyou100.gym.mapper.ICabinetMapper;
 import com.zhiyou100.gym.pojo.Cabinet;
 import com.zhiyou100.gym.pojo.CabinetInfo;
 import com.zhiyou100.gym.service.ICabinetInfoService;
-import com.zhiyou100.gym.service.ICabinetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,12 +20,14 @@ import java.util.List;
 /**
  * @author Sofia
  */
-@Service
-public class CabinetInfoService implements ICabinetInfoService {
+@Service("cabinetInfoServiceI")
+public class CabinetInfoServiceImpl implements ICabinetInfoService {
     @Autowired
     private ICabinetInfoMapper cabinetInfoMapper;
     @Autowired
     private ICabinetMapper cabinetMapper;
+
+    private static final int KEY = 10;
 
     @Override
     public int findCurrentPage(Integer page){
@@ -38,15 +39,15 @@ public class CabinetInfoService implements ICabinetInfoService {
 
     @Override
     public List<CabinetInfo> findByPage(Integer page) {
-        IPage<CabinetInfo> cabinetInfoIPage = new Page<>(page,10);
-        return cabinetInfoMapper.selectPage(cabinetInfoIPage,null).getRecords();
+        IPage<CabinetInfo> cabinetInfoPage = new Page<>(page,KEY);
+        return cabinetInfoMapper.selectPage(cabinetInfoPage,null).getRecords();
     }
 
     @Override
     public int findMaxPage() {
         int count = cabinetInfoMapper.selectCount(null);
-        int mPage = count / 10;
-        if (count % 10 != 0) {
+        int mPage = count / KEY;
+        if (count % KEY != 0) {
             mPage ++;
         }
         return mPage;

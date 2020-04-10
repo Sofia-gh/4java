@@ -33,6 +33,7 @@ public interface ICoachService {
 
     /**
      * 添加教练信息
+     * @param file
      * @param coach
      * @return int
      */
@@ -47,6 +48,7 @@ public interface ICoachService {
 
     /**
      * 修改教练信息
+     * @param file
      * @param coach
      * @return int
      */

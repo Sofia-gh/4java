@@ -23,12 +23,14 @@ import java.util.List;
 /**
  * @author Sofia
  */
-@Service
-public class CoachOrderService implements ICoachOrderService {
+@Service("coachOrderService")
+public class CoachOrderServiceImpl implements ICoachOrderService {
     @Autowired
     private ICoachOrderMapper coachOrderMapper;
     @Autowired
     private ICoachClassMapper coachClassMapper;
+
+    private static final int KEY = 10;
 
     @Override
     public int findCurrentPage(Integer page){
@@ -40,15 +42,15 @@ public class CoachOrderService implements ICoachOrderService {
 
     @Override
     public List<CoachOrder> findByPage(Integer page, CoachOrder coachOrder){
-        IPage<CoachOrder> coachOrderIPage = new Page<>(page,10);
-        return coachOrderMapper.selectPage(coachOrderIPage,new QueryWrapper<>(coachOrder)).getRecords();
+        IPage<CoachOrder> coachOrderPage = new Page<>(page,KEY);
+        return coachOrderMapper.selectPage(coachOrderPage,new QueryWrapper<>(coachOrder)).getRecords();
     }
 
     @Override
     public int findMaxPage(CoachOrder coachOrder) {
         int count = coachOrderMapper.selectCount(new QueryWrapper<>(coachOrder));
-        int mPage = count / 10;
-        if (count % 10 != 0) {
+        int mPage = count / KEY;
+        if (count % KEY != 0) {
             mPage ++;
         }
         return mPage;

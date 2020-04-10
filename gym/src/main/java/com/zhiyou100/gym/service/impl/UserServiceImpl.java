@@ -12,11 +12,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
-@Service
-public class UserService implements IUserService {
+@Service("userService")
+public class UserServiceImpl implements IUserService {
 
 	@Autowired
 	private IUserMapper userMapper;
+
+	private static final int KEY = 10;
+
 	@Override
 	public User findByAccount(String account) {
 		if (StringUtils.isEmpty(account)) {
@@ -35,7 +38,7 @@ public class UserService implements IUserService {
 
 	@Override
 	public List<User> findByPage(Integer page) {
-		PageHelper.startPage(page,10);
+		PageHelper.startPage(page,KEY);
 		List<User> users = userMapper.findAll();
 		return new PageInfo<User>(users).getList();
 	}
@@ -43,8 +46,8 @@ public class UserService implements IUserService {
 	@Override
 	public int findMaxPage() {
 		int count = userMapper.selectCount(null);
-		int mPage = count / 10;
-		if (count % 10 != 0) {
+		int mPage = count / KEY;
+		if (count % KEY != 0) {
 			mPage ++;
 		}
 		return mPage;

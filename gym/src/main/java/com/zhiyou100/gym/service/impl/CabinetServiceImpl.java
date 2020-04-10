@@ -13,10 +13,12 @@ import java.util.List;
 /**
  * @author Sofia
  */
-@Service
-public class CabinetService implements ICabinetService {
+@Service("cabinetService")
+public class CabinetServiceImpl implements ICabinetService {
     @Autowired
     private ICabinetMapper cabinetMapper;
+
+    private static final int KEY = 10;
 
     @Override
     public int findCurrentPage(Integer page){
@@ -28,15 +30,15 @@ public class CabinetService implements ICabinetService {
 
     @Override
     public List<Cabinet> findByPage(Integer page) {
-        IPage<Cabinet> cabinetIPage = new Page<>(page,10);
-        return cabinetMapper.selectPage(cabinetIPage,null).getRecords();
+        IPage<Cabinet> cabinetPage = new Page<>(page,KEY);
+        return cabinetMapper.selectPage(cabinetPage,null).getRecords();
     }
 
     @Override
     public int findMaxPage() {
         int count = cabinetMapper.selectCount(null);
-        int mPage = count / 10;
-        if (count % 10 != 0) {
+        int mPage = count / KEY;
+        if (count % KEY != 0) {
             mPage ++;
         }
         return mPage;

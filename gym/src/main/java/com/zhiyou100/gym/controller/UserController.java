@@ -45,7 +45,7 @@ public class UserController {
 		return "redirect:/index";
 	}
 
-//	@RequiresPermissions("user:select")
+	@RequiresPermissions("user:select")
 	@RequestMapping("show")
 	public String show(Model model,Integer page){
 		int currentPage = userService.findCurrentPage(page);
@@ -55,21 +55,21 @@ public class UserController {
 		return "user/show";
 	}
 
-//	@RequiresPermissions("user:insert")
+	@RequiresPermissions("user:insert")
 	@RequestMapping("add")
 	public String add(Model model){
 		model.addAttribute("roles",roleService.findAll());
 		return "user/add";
 	}
 
-//	@RequiresPermissions("user:insert")
+	@RequiresPermissions("user:insert")
 	@RequestMapping("insert")
 	public String insert(User user){
 		userService.insert(user);
 		return "redirect:show";
 	}
 
-//	@RequiresPermissions("user:update")
+	@RequiresPermissions("user:update")
 	@RequestMapping("edit")
 	public String edit(Integer id,Model model){
 		model.addAttribute("roles",roleService.findAll());
@@ -77,14 +77,14 @@ public class UserController {
 		return "user/edit";
 	}
 
-//	@RequiresPermissions("user:update")
+	@RequiresPermissions("user:update")
 	@RequestMapping("update")
 	public String update(User user){
 		userService.update(user);
 		return "redirect:show";
 	}
 
-//	@RequiresPermissions("user:delete")
+	@RequiresPermissions("user:delete")
 	@RequestMapping("delete")
 	public String delete(User user){
 		userService.delete(user);

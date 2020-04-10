@@ -15,6 +15,9 @@ import org.springframework.context.annotation.Configuration;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 
+/**
+ * @author Sofia
+ */
 @Configuration
 public class ShiroConfig {
 
@@ -39,7 +42,7 @@ public class ShiroConfig {
 		ShiroFilterFactoryBean  factoryBean = new ShiroFilterFactoryBean();
 		factoryBean.setSecurityManager(securityManager());
 		factoryBean.setLoginUrl("/login.html");
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> map = new HashMap<>(16);
 		map.put("/css/**", "anon");
 		map.put("/img/**", "anon");
 		map.put("/js/**", "anon");

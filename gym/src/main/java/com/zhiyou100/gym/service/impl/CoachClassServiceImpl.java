@@ -19,10 +19,12 @@ import java.util.List;
 /**
  * @author Sofia
  */
-@Service
-public class CoachClassService implements ICoachClassService {
+@Service("coachClassService")
+public class CoachClassServiceImpl implements ICoachClassService {
     @Autowired
     private ICoachClassMapper coachClassMapper;
+
+    private static final int KEY = 10;
 
     @Override
     public int findCurrentPage(Integer page){
@@ -34,7 +36,7 @@ public class CoachClassService implements ICoachClassService {
 
     @Override
     public List<CoachClass> findByPage(Integer page, Integer coachNumber) {
-        PageHelper.startPage(page,10);
+        PageHelper.startPage(page,KEY);
         List<CoachClass> classes = null;
         if (coachNumber!=null){
             classes = coachClassMapper.findByCoachNumber(coachNumber);
@@ -49,8 +51,8 @@ public class CoachClassService implements ICoachClassService {
         CoachClass coachClass = new CoachClass();
         coachClass.setCoachNumber(coachNumber);
         int count = coachClassMapper.selectCount(new QueryWrapper<>(coachClass));
-        int mPage = count / 10;
-        if (count % 10 != 0) {
+        int mPage = count / KEY;
+        if (count % KEY != 0) {
             mPage ++;
         }
         return mPage;

@@ -20,10 +20,15 @@ import java.util.List;
 /**
  * @author Sofia
  */
-@Service
-public class MemberTrainService implements IMemberTrainService {
+@Service("memberTrainService")
+public class MemberTrainServiceImpl implements IMemberTrainService {
     @Autowired
     private IMemberTrainMapper memberTrainMapper;
+
+    private static final String KEY1 = "跑步机";
+    private static final String KEY2 = "单车";
+    private static final String KEY3 = "蝴蝶机";
+    private static final int KEY = 10;
 
     @Override
     public int findCurrentPage(Integer page){
@@ -35,10 +40,10 @@ public class MemberTrainService implements IMemberTrainService {
 
     @Override
     public List<MemberTrain> findByPage(Integer page,Integer number) {
-        IPage<MemberTrain> memberTrainIPage = new Page<>(page,10);
+        IPage<MemberTrain> memberTrainPage = new Page<>(page,KEY);
         MemberTrain memberTrain = new MemberTrain();
         memberTrain.setMemberNumber(number);
-        return memberTrainMapper.selectPage(memberTrainIPage,new QueryWrapper<>(memberTrain)).getRecords();
+        return memberTrainMapper.selectPage(memberTrainPage,new QueryWrapper<>(memberTrain)).getRecords();
     }
 
     @Override
@@ -46,8 +51,8 @@ public class MemberTrainService implements IMemberTrainService {
         MemberTrain memberTrain = new MemberTrain();
         memberTrain.setMemberNumber(number);
         int count = memberTrainMapper.selectCount(new QueryWrapper<>(memberTrain));
-        int mPage = count / 10;
-        if (count % 10 != 0) {
+        int mPage = count / KEY;
+        if (count % KEY != 0) {
             mPage ++;
         }
         return mPage;
@@ -71,9 +76,6 @@ public class MemberTrainService implements IMemberTrainService {
 
     @Override
     public List<Double> findAll(Integer number) {
-        final String KEY1 = "跑步机";
-        final String KEY2 = "单车";
-        final String KEY3 = "蝴蝶机";
         MemberTrain memberTrain = new MemberTrain();
         memberTrain.setMemberNumber(number);
         List<MemberTrain> trains = memberTrainMapper.selectList(new QueryWrapper<>(memberTrain));
