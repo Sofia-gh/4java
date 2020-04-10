@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>天智健身系统</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <script src="/js/echarts.min.js"></script>
+    <script src="/js/jquery.js"></script>
+    <style type="text/css">
+        body{
+            min-height: 400px;
+        }
+        .container{
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <ol class="breadcrumb">
+        <span class="active">运动报表</span>
+    </ol>
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <script>
+        findAll();
+        function findAll() {
+            $.ajax({
+                url:"/member_train/form",
+                type:"get",
+                success:function (result) {
+                    if (result.code = 1) {
+                        var list = result.data;
+                        var myChart = echarts.init(document.getElementById('main'));
+                        var option = {
+                            title: {
+                                text: '运动报表'
+                            },
+                            tooltip: {},
+                            legend: {
+                                data:['累计使用时长']
+                            },
+                            xAxis: {
+                                data: ["跑步机","单车","蝴蝶机"]
+                            },
+                            yAxis: {},
+                            series: [{
+                                name: '累计使用时长',
+                                type: 'bar',
+                                data: [list[0],list[1],list[2]]
+                            }]
+                        };
+                        myChart.setOption(option);
+                    }
+                },
+                error:function () {
+                    alert("无法发起请求");
+                }
+            })
+        }
+    </script>
+</div>
+
+</body>
+</html>

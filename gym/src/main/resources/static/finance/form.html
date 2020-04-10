@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>天智健身系统</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <script src="/js/echarts.min.js"></script>
+    <script src="/js/jquery.js"></script>
+    <style type="text/css">
+        body{
+            min-height: 400px;
+        }
+        .container{
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <ol class="breadcrumb">
+        <span class="active">财务报表</span>
+    </ol>
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <br>
+    <div id="add" style="width: 600px;height:400px;"></div>
+    <br>
+    <div id="delete" style="width: 600px;height:400px;"></div>
+    <br>
+    <script>
+        find();
+        function find() {
+            $.ajax({
+                url:"/finance/form",
+                type:"get",
+                success:function (result) {
+                    if (result.code = 1) {
+                        var finances = result.data;
+                        var myChart = echarts.init(document.getElementById('main'));
+                        var option = {
+                            title: {
+                                text: '财务报表'
+                            },
+                            tooltip: {},
+                            xAxis: {
+                                data: ["总收入","总支出","总利润"]
+                            },
+                            yAxis: {},
+                            series: [{
+                                name: '金额',
+                                type: 'bar',
+                                data: [finances[0]+finances[1]+5000,finances[2]+3000,finances[0]+finances[1]+2000-finances[2]]
+                            }]
+                        };
+                        myChart.setOption(option);
+                        var myChart2 = echarts.init(document.getElementById('add'));
+                        var option2 = {
+                            title: {
+                                text: '收入'
+                            },
+                            tooltip: {},
+                            xAxis: {
+                                data: ["课程销售","会员销售","商品销售"]
+                            },
+                            yAxis: {},
+                            series: [{
+                                name: '金额',
+                                type: 'bar',
+                                data: [finances[0],finances[1],5000]
+                            }]
+                        };
+                        myChart2.setOption(option2);
+                        var myChart3 = echarts.init(document.getElementById('delete'));
+                        var option3 = {
+                            title: {
+                                text: '支出'
+                            },
+                            tooltip: {},
+                            xAxis: {
+                                data: ["商品成本","员工薪资","其他"]
+                            },
+                            yAxis: {},
+                            series: [{
+                                name: '金额',
+                                type: 'bar',
+                                data: [3000,finances[2],3000]
+                            }]
+                        };
+                        myChart3.setOption(option3);
+                    }
+                },
+                error:function () {
+                    alert("无法发起请求");
+                }
+            })
+        }
+    </script>
+</div>
+
+</body>
+</html>

@@ -34,4 +34,19 @@ public interface ICabinetService {
      * @return int
      */
     public int insert(Cabinet cabinet);
+
+    /**
+     * 修改柜子
+     * @param cabinet
+     * @return int
+     */
+    public int update(Cabinet cabinet);
+
+    /**
+     * 删除柜子
+     * @param id
+     * @return int
+     */
+    public int delete(Integer id);
+
 }

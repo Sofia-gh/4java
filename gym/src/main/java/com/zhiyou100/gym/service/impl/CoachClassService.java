@@ -8,10 +8,12 @@ import com.zhiyou100.gym.pojo.CoachClass;
 import com.zhiyou100.gym.service.ICoachClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -89,10 +91,37 @@ public class CoachClassService implements ICoachClassService {
         return coachClassMapper.updateById(coachClass);
     }
 
-    //todo 搜索还要自己写mapper
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public List<Integer> findCount(Integer number) {
+        List<Integer> counts = new ArrayList<>();
+        CoachClass coachClass = new CoachClass();
+        coachClass.setCoachNumber(number);
+        Integer count1 = coachClassMapper.selectCount(new QueryWrapper<>(coachClass));
+        coachClass.setStatus(1);
+        Integer count2 = coachClassMapper.selectCount(new QueryWrapper<>(coachClass));
+        coachClass.setStatus(2);
+        Integer count3 = coachClassMapper.selectCount(new QueryWrapper<>(coachClass));
+        coachClass.setStatus(3);
+        Integer count4 = coachClassMapper.selectCount(new QueryWrapper<>(coachClass));
+        counts.add(count1);
+        counts.add(count2);
+        counts.add(count3);
+        counts.add(count4);
+        return counts;
+    }
+
+    @Override
+    public List<CoachClass> findByStatus() {
+        CoachClass coachClass = new CoachClass();
+        coachClass.setStatus(2);
+        return coachClassMapper.selectList(new QueryWrapper<>(coachClass));
+    }
+
     @Override
     public List<CoachClass> find(String key) {
         return coachClassMapper.selectList(new QueryWrapper<CoachClass>().like("name",key).or().like("label",key));
     }
+
 
 }

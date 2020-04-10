@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,14 +34,18 @@ public class MemberTrainService implements IMemberTrainService {
     }
 
     @Override
-    public List<MemberTrain> findByPage(Integer page) {
+    public List<MemberTrain> findByPage(Integer page,Integer number) {
         IPage<MemberTrain> memberTrainIPage = new Page<>(page,10);
-        return memberTrainMapper.selectPage(memberTrainIPage,null).getRecords();
+        MemberTrain memberTrain = new MemberTrain();
+        memberTrain.setMemberNumber(number);
+        return memberTrainMapper.selectPage(memberTrainIPage,new QueryWrapper<>(memberTrain)).getRecords();
     }
 
     @Override
-    public int findMaxPage() {
-        int count = memberTrainMapper.selectCount(null);
+    public int findMaxPage(Integer number) {
+        MemberTrain memberTrain = new MemberTrain();
+        memberTrain.setMemberNumber(number);
+        int count = memberTrainMapper.selectCount(new QueryWrapper<>(memberTrain));
         int mPage = count / 10;
         if (count % 10 != 0) {
             mPage ++;
@@ -61,6 +67,35 @@ public class MemberTrainService implements IMemberTrainService {
         memberTrain.setStatus(2);
         memberTrain.setEndTime(Timestamp.valueOf(LocalDateTime.now()));
         return memberTrainMapper.updateById(memberTrain);
+    }
+
+    @Override
+    public List<Double> findAll(Integer number) {
+        final String KEY1 = "跑步机";
+        final String KEY2 = "单车";
+        final String KEY3 = "蝴蝶机";
+        MemberTrain memberTrain = new MemberTrain();
+        memberTrain.setMemberNumber(number);
+        List<MemberTrain> trains = memberTrainMapper.selectList(new QueryWrapper<>(memberTrain));
+        double a = 0;
+        double b = 0;
+        double c = 0;
+        for (MemberTrain train:trains) {
+            if (train.getEquipment().equals(KEY1)){
+                a = a+(double)Math.round((double)(train.getEndTime().getTime()-train.getStartTime().getTime())/(1000 * 60 * 6))/10;
+            }
+            if (train.getEquipment().equals(KEY2)){
+                b = b+(double)Math.round((double)(train.getEndTime().getTime()-train.getStartTime().getTime())/(1000 * 60 * 6))/10;
+            }
+            if (train.getEquipment().equals(KEY3)){
+                c = c+(double)Math.round((double)(train.getEndTime().getTime()-train.getStartTime().getTime())/(1000 * 60 * 6))/10;
+            }
+        }
+        List<Double> list = new ArrayList<>();
+        list.add(a);
+        list.add(b);
+        list.add(c);
+        return list;
     }
 
 }

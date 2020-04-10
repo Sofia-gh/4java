@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>天智健身系统</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <script src="/js/echarts.min.js"></script>
+    <script src="/js/jquery.js"></script>
+    <style type="text/css">
+        body{
+            min-height: 400px;
+        }
+        .container{
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <ol class="breadcrumb">
+        <span class="active">课程分析</span>
+    </ol>
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <script>
+        find();
+        function find() {
+            $.ajax({
+                url:"/coach_class/form",
+                type:"get",
+                success:function (result) {
+                    if (result.code = 1) {
+                        var counts = result.data;
+                        var myChart = echarts.init(document.getElementById('main'));
+                        var option = {
+                            title: {
+                                text: '课程分析'
+                            },
+                            tooltip: {},
+                            legend: {
+                                data:['课程数量']
+                            },
+                            xAxis: {
+                                data: ["课程总数","预约中","已报名","已销课"]
+                            },
+                            yAxis: {},
+                            series: [{
+                                name: '课程数量',
+                                type: 'bar',
+                                data: [counts[0],counts[1],counts[2],counts[3]]
+                            }]
+                        };
+                        myChart.setOption(option);
+                    }
+                },
+                error:function () {
+                    alert("无法发起请求");
+                }
+            })
+        }
+    </script>
+</div>
+
+</body>
+</html>

@@ -17,16 +17,18 @@ public interface IMemberTrainService {
 
     /**
      * 分页查询会员训练记录
+     * @param number
      * @param page
      * @return List<MemberTrain>
      */
-    public List<MemberTrain> findByPage(Integer page);
+    public List<MemberTrain> findByPage(Integer page,Integer number);
 
     /**
      * 总页数查询
+     * @param number
      * @return mPage
      */
-    public int findMaxPage();
+    public int findMaxPage(Integer number);
 
     /**
      * 开始训练
@@ -41,4 +43,11 @@ public interface IMemberTrainService {
      * @return int
      */
     public int update(MemberTrain memberTrain);
+
+    /**
+     * 查询全部
+     * @param number
+     * @return List<Long>
+     */
+    public List<Double> findAll(Integer number);
 }

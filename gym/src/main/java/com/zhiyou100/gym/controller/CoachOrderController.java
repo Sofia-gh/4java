@@ -1,7 +1,9 @@
 package com.zhiyou100.gym.controller;
 
 import com.zhiyou100.gym.pojo.CoachOrder;
+import com.zhiyou100.gym.pojo.User;
 import com.zhiyou100.gym.service.ICoachOrderService;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,8 +21,8 @@ public class CoachOrderController {
 
     @RequestMapping("show")
     public String order(CoachOrder coachOrder,Integer page, Model model){
-        // todo
-        Integer memberNumber = 202003001;
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        Integer memberNumber = user.getNumber();
         coachOrder.setMemberNumber(memberNumber);
         int currentPage = coachOrderService.findCurrentPage(page);
         model.addAttribute("currentPage",currentPage);
@@ -31,9 +33,10 @@ public class CoachOrderController {
 
     @RequestMapping("order")
     public String order(CoachOrder coachOrder){
-        coachOrder.setMemberNumber(202003001);
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        coachOrder.setMemberNumber(user.getNumber());
         coachOrderService.insert(coachOrder);
-        return "redirect:show";
+        return "redirect:/coach/find";
     }
 
     @RequestMapping("delete")

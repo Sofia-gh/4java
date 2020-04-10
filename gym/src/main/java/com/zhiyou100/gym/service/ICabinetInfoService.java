@@ -35,4 +35,11 @@ public interface ICabinetInfoService {
      * @return int
      */
     public int insert(CabinetInfo cabinetInfo);
+
+    /**
+     * 到期
+     * @param cabinetInfo
+     * @return int
+     */
+    public int update(CabinetInfo cabinetInfo);
 }

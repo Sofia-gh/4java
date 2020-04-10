@@ -1,5 +1,6 @@
 package com.zhiyou100.gym.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zhiyou100.gym.mapper.ISchedulerMapper;
@@ -33,14 +34,18 @@ public class SchedulerService implements ISchedulerService {
     }
 
     @Override
-    public List<Scheduler> findByPage(Integer page) {
+    public List<Scheduler> findByPage(Integer page,Integer number) {
         IPage<Scheduler> schedulerIPage = new Page<>(page,10);
-        return schedulerMapper.selectPage(schedulerIPage,null).getRecords();
+        Scheduler scheduler = new Scheduler();
+        scheduler.setCoachNumber(number);
+        return schedulerMapper.selectPage(schedulerIPage,new QueryWrapper<>(scheduler)).getRecords();
     }
 
     @Override
-    public int findMaxPage() {
-        int count = schedulerMapper.selectCount(null);
+    public int findMaxPage(Integer number) {
+        Scheduler scheduler = new Scheduler();
+        scheduler.setCoachNumber(number);
+        int count = schedulerMapper.selectCount(new QueryWrapper<>(scheduler));
         int mPage = count / 10;
         if (count % 10 != 0) {
             mPage ++;
@@ -51,9 +56,9 @@ public class SchedulerService implements ISchedulerService {
     @Override
     public int insert(Scheduler scheduler) {
         LocalDateTime now = LocalDateTime.now();
+        scheduler.setUpdateTime(Timestamp.valueOf(now));
         long number = Long.valueOf(String.valueOf(now.getYear())+String.valueOf(now.getMonthValue())+String.valueOf(now.getDayOfMonth())+String.valueOf(Instant.now().getEpochSecond()));
         scheduler.setNumber(number);
-        scheduler.setUpdateTime(Timestamp.valueOf(now));
         return schedulerMapper.insert(scheduler);
     }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8">
     <title>天智健身系统</title>
@@ -29,7 +29,7 @@
         <a href="/class/show">团课管理</a> /
         <span class="active">团课展示</span>
     </ol>
-    <a href="/class/add" class="btn btn-default">添加团课</a>
+    <a shiro:hasAnyRoles="主管,超级管理员" href="/class/add" class="btn btn-default">添加团课</a>
     <table id="table" class="table table-bordered">
         <tr>
             <td>团课编号</td>
@@ -54,8 +54,8 @@
             <td th:if="${c.status==0}" th:text="无效记录"></td>
             <td>
                 <a th:href="@{/class/order(classNumber=${c.number})}">会员参与</a>
-                <a th:if="${c.status==1}" th:href="@{/class/start(id=${c.id})}">开始团课</a>
-                <a th:if="${c.status==2}" th:href="@{/class/end(id=${c.id})}">结束团课</a>
+                <a shiro:hasAnyRoles="主管,超级管理员" th:if="${c.status==1}" th:href="@{/class/start(id=${c.id})}">开始团课</a>
+                <a shiro:hasAnyRoles="主管,超级管理员" th:if="${c.status==2}" th:href="@{/class/end(id=${c.id})}">结束团课</a>
             </td>
         </tr>
     </table>

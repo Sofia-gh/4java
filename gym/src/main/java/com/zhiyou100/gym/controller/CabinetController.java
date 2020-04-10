@@ -49,7 +49,7 @@ public class CabinetController {
     @RequestMapping("update")
     public String update(CabinetInfo cabinetInfo){
         cabinetInfoService.insert(cabinetInfo);
-        return "redirect:info";
+        return "redirect:show";
     }
 
     @RequestMapping("info")
@@ -59,5 +59,11 @@ public class CabinetController {
         model.addAttribute("infos",cabinetInfoService.findByPage(currentPage));
         model.addAttribute("mPage",cabinetInfoService.findMaxPage());
         return "cabinet/info";
+    }
+
+    @RequestMapping("delete")
+    public String delete(CabinetInfo cabinetInfo){
+        cabinetInfoService.update(cabinetInfo);
+        return "redirect:info";
     }
 }

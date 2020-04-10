@@ -39,7 +39,7 @@
             <td>开租时间</td>
             <td>修改时间</td>
             <td>状态</td>
-            <!--<td>操作</td>-->
+            <td>操作</td>
         </tr>
         <tr th:each="info:${infos}">
             <td th:text="${info.number}"></td>
@@ -50,49 +50,49 @@
             <td th:text="${info.createTime}"></td>
             <td th:text="${info.updateTime}"></td>
             <td th:if="${info.status==1}" th:text="可用"></td>
-            <td th:if="${info.status==0}" th:text="无效记录"></td>
-            <!--<td>
-                <a th:if="${info.status==1}" th:href="@{/cabinet/infoDelete(id=${info.id})}">删除</a>
-            </td>-->
+            <td th:if="${info.status==2}" th:text="到期"></td>
+            <td>
+                <a th:if="${info.status==1}" th:href="@{/cabinet/delete(id=${info.id})}">到期</a>
+            </td>
         </tr>
     </table>
     <nav aria-label="Page navigation">
         <ul class="pagination">
             <li>
-                <a th:href="@{/cabinet/show(page=1)}">首页</a>
+                <a th:href="@{/cabinet/info(page=1)}">首页</a>
             </li>
 
             <!-- 上一页 -->
             <li th:if="${currentPage -1 >= 1}">
-                <a th:href="@{/cabinet/show(page=${currentPage}-1)}" th:text="上一页"></a>
+                <a th:href="@{/cabinet/info(page=${currentPage}-1)}" th:text="上一页"></a>
             </li>
 
             <!-- 中间页 -->
             <li th:if="${mPage<=5}" th:each="page:${#numbers.sequence(1, mPage)}">
-                <a th:href="@{/cabinet/show(page=${page})}" th:text="${page}" th:if="${page ne currentPage}"></a>
-                <a th:href="@{/cabinet/show(page=${page})}" th:text="${page}" th:if="${page eq currentPage}" th:style="'font-weight:bold;background: #6faed9;'"></a>
+                <a th:href="@{/cabinet/info(page=${page})}" th:text="${page}" th:if="${page ne currentPage}"></a>
+                <a th:href="@{/cabinet/info(page=${page})}" th:text="${page}" th:if="${page eq currentPage}" th:style="'font-weight:bold;background: #6faed9;'"></a>
             </li>
             <li th:if="${mPage>5 && currentPage<=3}" th:each="page:${#numbers.sequence(1, 5)}">
-                <a th:href="@{/cabinet/show(page=${page})}" th:text="${page}" th:if="${page ne currentPage}"></a>
-                <a th:href="@{/cabinet/show(page=${page})}" th:text="${page}" th:if="${page eq currentPage}" th:style="'font-weight:bold;background: #6faed9;'"></a>
+                <a th:href="@{/cabinet/info(page=${page})}" th:text="${page}" th:if="${page ne currentPage}"></a>
+                <a th:href="@{/cabinet/info(page=${page})}" th:text="${page}" th:if="${page eq currentPage}" th:style="'font-weight:bold;background: #6faed9;'"></a>
             </li>
             <li th:if="${mPage>5 && currentPage>3 && currentPage+2<=mPage}" th:each="page:${#numbers.sequence(currentPage-2,currentPage+2)}">
-                <a th:href="@{/cabinet/show(page=${page})}" th:text="${page}" th:if="${page ne currentPage}"></a>
-                <a th:href="@{/cabinet/show(page=${page})}" th:text="${page}" th:if="${page eq currentPage}" th:style="'font-weight:bold;background: #6faed9;'"></a>
+                <a th:href="@{/cabinet/info(page=${page})}" th:text="${page}" th:if="${page ne currentPage}"></a>
+                <a th:href="@{/cabinet/info(page=${page})}" th:text="${page}" th:if="${page eq currentPage}" th:style="'font-weight:bold;background: #6faed9;'"></a>
             </li>
             <li th:if="${mPage>5 && currentPage>3 && currentPage+2>mPage}" th:each="page:${#numbers.sequence(mPage-4,mPage)}">
-                <a th:href="@{/cabinet/show(page=${page})}" th:text="${page}" th:if="${page ne currentPage}"></a>
-                <a th:href="@{/cabinet/show(page=${page})}" th:text="${page}" th:if="${page eq currentPage}" th:style="'font-weight:bold;background: #6faed9;'"></a>
+                <a th:href="@{/cabinet/info(page=${page})}" th:text="${page}" th:if="${page ne currentPage}"></a>
+                <a th:href="@{/cabinet/info(page=${page})}" th:text="${page}" th:if="${page eq currentPage}" th:style="'font-weight:bold;background: #6faed9;'"></a>
             </li>
 
             <!-- 下一页 -->
             <li th:if="${currentPage < mPage}">
-                <a th:href="@{/cabinet/show(page=${currentPage+1})}" th:text="下一页"></a>
+                <a th:href="@{/cabinet/info(page=${currentPage+1})}" th:text="下一页"></a>
             </li>
 
             <!-- 尾页 -->
             <li>
-                <a th:href="@{/cabinet/show(page=${mPage})}">尾页</a>
+                <a th:href="@{/cabinet/info(page=${mPage})}">尾页</a>
             </li>
         </ul>
     </nav>

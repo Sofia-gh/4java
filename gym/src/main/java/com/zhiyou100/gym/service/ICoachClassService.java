@@ -73,6 +73,19 @@ public interface ICoachClassService {
     public int finish(CoachClass coachClass);
 
     /**
+     * 查询数量
+     * @param number
+     * @return List<Integer>
+     */
+    public List<Integer> findCount(Integer number);
+
+    /**
+     * 查询所有已报名课程
+     * @return List<CoachClass>
+     */
+    public List<CoachClass> findByStatus();
+
+    /**
      * 搜索课程
      * @param key
      * @return List<CoachClass>

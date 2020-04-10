@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
 <head>
     <meta charset="utf-8">
     <title>天智健身系统</title>
@@ -29,7 +29,7 @@
         <a href="/coach_class/show">教练课程管理</a> /
         <span class="active">信息展示</span>
     </ol>
-    <a href="/coach_class/add" class="btn btn-default">添加课程</a>
+    <a shiro:hasAnyRoles="教练,超级管理员" href="/coach_class/add" class="btn btn-default">添加课程</a>
     <table id="table" class="table table-bordered">
         <tr>
             <td>课程编号</td>
@@ -58,12 +58,11 @@
             <td th:if="${class.status==2}" th:text="报名截止"></td>
             <td th:if="${class.status==3}" th:text="已销课"></td>
             <td>
-                <a th:href="@{/coach_class/edit(id=${class.id})}">修改课程信息</a>
-                <a th:href="@{/coach_class/delete(id=${class.id})}">删除课程</a>
-                <a th:if="${class.status==1}" th:href="@{/coach_class/end(id=${class.id})}">截止报名</a>
-                <a th:if="${class.coachOrder != null}" th:href="@{/coach_class/finish(id=${class.id})}">销课</a>
-                <!--todo 判断登录权限-->
-                <a  th:if="${class.status==1}" th:href="@{/coach_order/order(coachClassNumber=${class.number})}">预定课程</a>
+                <a shiro:hasAnyRoles="教练,超级管理员" th:href="@{/coach_class/edit(id=${class.id})}">修改课程信息</a>
+                <a shiro:hasAnyRoles="教练,超级管理员" th:href="@{/coach_class/delete(id=${class.id})}">删除课程</a>
+                <a shiro:hasAnyRoles="教练,超级管理员" th:if="${class.status==1}" th:href="@{/coach_class/end(id=${class.id})}">截止报名</a>
+                <a shiro:hasAnyRoles="教练,超级管理员" th:if="${class.coachOrder != null}" th:href="@{/coach_class/finish(id=${class.id})}">销课</a>
+                <a shiro:hasAnyRoles="会员,超级管理员"  th:if="${class.status==1}" th:href="@{/coach_order/order(coachClassNumber=${class.number})}">预定课程</a>
             </td>
         </tr>
     </table>

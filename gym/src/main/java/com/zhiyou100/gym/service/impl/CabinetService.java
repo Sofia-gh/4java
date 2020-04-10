@@ -47,4 +47,14 @@ public class CabinetService implements ICabinetService {
         return cabinetMapper.insert(cabinet);
     }
 
+    @Override
+    public int update(Cabinet cabinet) {
+        return cabinetMapper.updateById(cabinet);
+    }
+
+    @Override
+    public int delete(Integer id) {
+        return cabinetMapper.deleteById(id);
+    }
+
 }

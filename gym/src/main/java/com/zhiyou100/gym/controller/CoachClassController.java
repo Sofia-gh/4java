@@ -4,10 +4,15 @@ import com.zhiyou100.gym.pojo.*;
 import com.zhiyou100.gym.service.IClassOrderService;
 import com.zhiyou100.gym.service.ICoachClassService;
 import com.zhiyou100.gym.service.ICoachOrderService;
+import com.zhiyou100.gym.util.ResponseUtil;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * @author Sofia
@@ -20,8 +25,10 @@ public class CoachClassController {
 
     @RequestMapping("show")
     public String show(Integer coachNumber,Integer page, Model model){
-        // todo 判断登录
-//        coachNumber = 22020001;
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        if (user.getRole().getName().equals("教练")){
+            coachNumber = user.getNumber();
+        }
         int currentPage = coachClassService.findCurrentPage(page);
         model.addAttribute("currentPage",currentPage);
         model.addAttribute("classes",coachClassService.findByPage(currentPage,coachNumber));
@@ -36,6 +43,8 @@ public class CoachClassController {
 
     @RequestMapping("insert")
     public String insert(CoachClass coachClass){
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        coachClass.setCoachNumber(user.getNumber());
         coachClassService.insert(coachClass);
         return "redirect:show";
     }
@@ -68,5 +77,13 @@ public class CoachClassController {
     public String finish(CoachClass coachClass){
         coachClassService.finish(coachClass);
         return "redirect:show";
+    }
+
+    @ResponseBody
+    @RequestMapping("form")
+    public ResponseUtil form(){
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        List<Integer> counts = coachClassService.findCount(user.getNumber());
+        return ResponseUtil.success(counts);
     }
 }

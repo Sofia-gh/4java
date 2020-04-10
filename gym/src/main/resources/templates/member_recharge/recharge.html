@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="/css/admin.css">
@@ -27,8 +27,11 @@
         <span class="active">会员充值</span>
     </ol>
     <div class="input-group">
-        <span class="input-group-addon">充值项编号</span><!--todo 充值项编号可以遍历所有的会员卡，课程和商品以选择，金额随选择自动生成-->
-        <input type="number" class="form-control" name="itemNumber" value="1001"/>
+        <span class="input-group-addon">充值项</span>
+        <select class="form-control" name="itemNumber">
+            <option th:each="card:${cards}" th:value="${card.number}" th:text="${card.number+card.type}"></option>
+            <option th:each="class:${classes}" th:value="${class.number}"  th:text="${class.number+class.name}"></option>
+        </select>
     </div>
     <br>
     <div class="input-group">

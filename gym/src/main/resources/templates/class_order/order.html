@@ -51,8 +51,7 @@
             <td th:if="${c.status==3}" th:text="已结束"></td>
             <td th:if="${c.status==0}" th:text="无效记录"></td>
             <td>
-                <!-- todo memberNumber-->
-                <a th:if="${c.status==1}" th:href="@{/class_order/insert(classNumber=${c.number},memberNumber=202003001)}">预约</a>
+                <a th:if="${c.status==1}" th:href="@{/class_order/insert(classNumber=${c.number})}">预约</a>
                 <span th:if="${c.status!=1}">预约截止</span>
             </td>
         </tr>

@@ -69,4 +69,19 @@ public class CabinetInfoService implements ICabinetInfoService {
         return 1;
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int update(CabinetInfo cabinetInfo) {
+        cabinetInfo = cabinetInfoMapper.selectById(cabinetInfo.getId());
+        LocalDateTime now = LocalDateTime.now();
+        cabinetInfo.setUpdateTime(Timestamp.valueOf(now));
+        cabinetInfo.setStatus(2);
+        cabinetInfoMapper.updateById(cabinetInfo);
+        Cabinet cabinet = new Cabinet();
+        cabinet.setNumber(cabinetInfo.getCabinetNumber());
+        Cabinet cabinet1 = cabinetMapper.selectOne(new QueryWrapper<>(cabinet));
+        cabinet.setStatus(1);
+        return cabinetMapper.update(cabinet,new QueryWrapper<>(cabinet1));
+    }
+
 }

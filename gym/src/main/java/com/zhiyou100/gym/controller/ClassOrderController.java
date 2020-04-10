@@ -2,8 +2,10 @@ package com.zhiyou100.gym.controller;
 
 import com.zhiyou100.gym.pojo.Class;
 import com.zhiyou100.gym.pojo.ClassOrder;
+import com.zhiyou100.gym.pojo.User;
 import com.zhiyou100.gym.service.IClassOrderService;
 import com.zhiyou100.gym.service.IClassService;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,14 +33,16 @@ public class ClassOrderController {
 
     @RequestMapping("insert")
     public String insert(ClassOrder classOrder){
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        classOrder.setMemberNumber(user.getNumber());
         classOrderService.insert(classOrder);
         return "redirect:show";
     }
 
     @RequestMapping("show")
     public String order(ClassOrder classOrder, Integer page, Model model){
-        // todo
-        Integer memberNumber = 202003001;
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        Integer memberNumber = user.getNumber();
         classOrder.setMemberNumber(memberNumber);
         int currentPage = classOrderService.findCurrentPage(page);
         model.addAttribute("currentPage",currentPage);

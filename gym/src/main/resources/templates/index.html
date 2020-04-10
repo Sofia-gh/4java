@@ -27,7 +27,7 @@
 </div>
 <div class="main">
     <ul class="left-side">
-        <li class="menu-title" shiro:hasPermission="cabinet:show">
+        <li class="menu-title" shiro:hasAnyRoles="前台,超级管理员">
             <a href="#">
                 <i></i>&nbsp;&nbsp;租柜管理
             </a>
@@ -46,7 +46,7 @@
                 </li>
             </ul>
         </li>
-        <li class="menu-title">
+        <li class="menu-title" shiro:hasAnyRoles="前台,超级管理员">
             <a href="#">
                 <i></i>&nbsp;&nbsp;前台签到
             </a>
@@ -70,26 +70,17 @@
                 </li>
             </ul>
         </li>
-        <li class="menu-title">
+        <li class="menu-title" shiro:hasAnyRoles="前台,超级管理员">
             <a href="/member_recharge/show" target="pageBox">
                 <i></i>&nbsp;&nbsp;会员充值
             </a>
         </li>
-        <!--<li class="sub-menu">
-            <ul>
-                <li class="active">
-                    <a href="/member_recharge/show"  target="pageBox">
-                        <i class="fa fa-circle-thin"></i>&nbsp;&nbsp;会员充值
-                    </a>
-                </li>
-            </ul>
-        </li>-->
-        <li class="menu-title">
+        <li class="menu-title" shiro:hasAnyRoles="会员,超级管理员">
             <a href="#">
                 <i></i>&nbsp;&nbsp;训练管理
             </a>
         </li>
-        <li class="sub-menu">
+        <li class="sub-menu" shiro:hasAnyRoles="会员,超级管理员">
             <ul>
                 <li class="active">
                     <a href="/member_train/show"  target="pageBox">
@@ -104,16 +95,23 @@
                     </a>
                 </li>
             </ul>
+            <ul>
+                <li class="active">
+                    <a href="/member_train/form.html"  target="pageBox">
+                        <i class="fa fa-circle-thin"></i>&nbsp;&nbsp;运动报表
+                    </a>
+                </li>
+            </ul>
         </li>
         <li class="menu-title">
-            <a href="#">
-                <i></i>&nbsp;&nbsp;团课管理
+            <a href="#" shiro:hasAnyRoles="会员,超级管理员">
+                <i></i>&nbsp;&nbsp;团课预约
             </a>
         </li>
         <li class="sub-menu">
             <ul>
                 <li class="active">
-                    <a href="/class/show"  target="pageBox">
+                    <a href="/class_order/order"  target="pageBox">
                         <i class="fa fa-circle-thin"></i>&nbsp;&nbsp;团课预约
                     </a>
                 </li>
@@ -127,78 +125,95 @@
             </ul>
         </li>
         <li class="menu-title">
-            <a href="#">
-                <i></i>&nbsp;&nbsp;课程管理
+            <a href="#" shiro:hasAnyRoles="教练,主管,超级管理员">
+                <i></i>&nbsp;&nbsp;团课管理
             </a>
         </li>
         <li class="sub-menu">
             <ul>
                 <li class="active">
+                    <a href="/class/show"  target="pageBox">
+                        <i class="fa fa-circle-thin"></i>&nbsp;&nbsp;团课安排
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="menu-title">
+            <a href="#" shiro:hasAnyRoles="会员,教练,主管,超级管理员">
+                <i></i>&nbsp;&nbsp;课程管理
+            </a>
+        </li>
+        <li class="sub-menu">
+            <ul>
+                <li class="active" shiro:hasAnyRoles="会员,超级管理员">
                     <a href="/coach/find"  target="pageBox">
                         <i class="fa fa-circle-thin"></i>&nbsp;&nbsp;私教预约
                     </a>
                 </li>
             </ul>
             <ul>
-                <li class="active">
+                <li class="active" shiro:hasAnyRoles="会员,超级管理员">
                     <a href="/coach_order/show"  target="pageBox">
                         <i class="fa fa-circle-thin"></i>&nbsp;&nbsp;预约记录
                     </a>
                 </li>
             </ul>
             <ul>
-                <li class="active">
+                <li class="active" shiro:hasAnyRoles="教练,主管,超级管理员">
                     <a href="/coach_class/show"  target="pageBox">
                         <i class="fa fa-circle-thin"></i>&nbsp;&nbsp;排课管理
                     </a>
                 </li>
             </ul>
-        </li>
-        <li class="menu-title">
-            <a href="/scheduler/show" target="pageBox">
-                <i></i>&nbsp;&nbsp;日程管理
-            </a>
-        </li>
-        <li class="menu-title">
-            <a href="#">
-                <i></i>&nbsp;&nbsp;用户管理
-            </a>
-        </li>
-        <li class="sub-menu">
             <ul>
-                <li class="active">
-                    <a href="/user/show"  target="pageBox">
-                        <i class="fa fa-circle-thin"></i>&nbsp;&nbsp;用户信息
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="/member/show"  target="pageBox">
-                        <i class="fa fa-circle-thin"></i>&nbsp;&nbsp;会员管理
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="/coach/show"  target="pageBox">
-                        <i class="fa fa-circle-thin"></i>&nbsp;&nbsp;教练管理
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="/staff/show"  target="pageBox">
-                        <i class="fa fa-circle-thin"></i>&nbsp;&nbsp;员工管理
+                <li class="active" shiro:hasAnyRoles="教练,超级管理员">
+                    <a href="/coach_class/form.html"  target="pageBox">
+                        <i class="fa fa-circle-thin"></i>&nbsp;&nbsp;课程分析
                     </a>
                 </li>
             </ul>
         </li>
         <li class="menu-title">
-            <a href="/achievement/show" target="pageBox">
-                <i></i>&nbsp;&nbsp;业绩管理
+            <a href="/scheduler/show" target="pageBox" shiro:hasAnyRoles="教练,超级管理员">
+                <i></i>&nbsp;&nbsp;日程管理
             </a>
         </li>
-        <li class="menu-title">
+        <li class="menu-title" shiro:hasAnyRoles="主管,超级管理员">
+            <a href="/user/show" target="pageBox">
+                <i></i>&nbsp;&nbsp;用户管理
+            </a>
+        </li>
+        <li class="menu-title" shiro:hasAnyRoles="主管,超级管理员">
+            <a href="/staff/show" target="pageBox">
+                <i></i>&nbsp;&nbsp;员工管理
+            </a>
+        </li>
+        <li class="menu-title" shiro:hasAnyRoles="主管,超级管理员">
+            <a href="/coach/show" target="pageBox">
+                <i></i>&nbsp;&nbsp;教练管理
+            </a>
+        </li>
+        <li class="menu-title" shiro:hasAnyRoles="主管,超级管理员">
+            <a href="/member/show" target="pageBox">
+                <i></i>&nbsp;&nbsp;会员管理
+            </a>
+        </li>
+        <li class="menu-title" shiro:hasAnyRoles="主管,超级管理员">
             <a href="/card/show" target="pageBox">
                 <i></i>&nbsp;&nbsp;会员卡管理
             </a>
         </li>
-        <li class="menu-title">
+        <li class="menu-title" shiro:hasAnyRoles="主管,超级管理员">
+            <a href="/finance/form.html" target="pageBox">
+                <i></i>&nbsp;&nbsp;财务报表
+            </a>
+        </li>
+        <li class="menu-title" shiro:hasAnyRoles="主管,超级管理员">
+            <a href="/achievement/show" target="pageBox">
+                <i></i>&nbsp;&nbsp;业绩管理
+            </a>
+        </li>
+        <li class="menu-title" shiro:hasAnyRoles="主管,超级管理员">
             <a href="/maintenance/show" target="pageBox">
                 <i></i>&nbsp;&nbsp;维护记录
             </a>

@@ -2,8 +2,10 @@ package com.zhiyou100.gym.controller;
 
 import com.zhiyou100.gym.pojo.Scheduler;
 import com.zhiyou100.gym.pojo.Staff;
+import com.zhiyou100.gym.pojo.User;
 import com.zhiyou100.gym.service.ISchedulerService;
 import com.zhiyou100.gym.service.IStaffService;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,10 +22,11 @@ public class SchedulerController {
 
     @RequestMapping("show")
     public String show(Integer page,Model model){
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
         int currentPage = schedulerService.findCurrentPage(page);
         model.addAttribute("currentPage",currentPage);
-        model.addAttribute("schedulers",schedulerService.findByPage(currentPage));
-        model.addAttribute("mPage",schedulerService.findMaxPage());
+        model.addAttribute("schedulers",schedulerService.findByPage(currentPage,user.getNumber()));
+        model.addAttribute("mPage",schedulerService.findMaxPage(user.getNumber()));
         return "scheduler/show";
     }
 
@@ -34,6 +37,8 @@ public class SchedulerController {
 
     @RequestMapping("insert")
     public String insert(Scheduler scheduler){
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        scheduler.setCoachNumber(user.getNumber());
         schedulerService.insert(scheduler);
         return "redirect:show";
     }

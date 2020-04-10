@@ -17,16 +17,18 @@ public interface ISchedulerService {
 
     /**
      * 分页查询员工信息
+     * @param number
      * @param page
      * @return List<Scheduler>
      */
-    public List<Scheduler> findByPage(Integer page);
+    public List<Scheduler> findByPage(Integer page,Integer number);
 
     /**
      * 总页数查询
+     * @param number
      * @return mPage
      */
-    public int findMaxPage();
+    public int findMaxPage(Integer number);
 
     /**
      * 添加员工
